@@ -66,7 +66,8 @@ public class Enemy
     // ---------------- METODOS ----------------
 
     // Registrar CA aleatorio según la dificultad del enemigo
-    private int registrarClaseArmadura(int dificultad) {
+    private int registrarClaseArmadura(int dificultad) 
+    {
 
         // Para determinar el array de 0 a 2, no de 1 a 3
         int posicion = dificultad - 1;
@@ -80,13 +81,15 @@ public class Enemy
 
     // Comprobación si el golpe acierta (D20 + mod. ataque > clase_armadura)
     // @return true si el total iguala o supera esa clase de armadura
-    public boolean acierta(int caObjetivo) {
+    public boolean acierta(int caObjetivo) 
+    {
         int tirada = Dice.roll(1, Dice.D20) + getBonoAtaque();
         return tirada >= caObjetivo;
     }
 
     // (setVida), baja vida actual del enemigo
-    public void takeDamage(int cantidadDanyo) {
+    public void takeDamage(int cantidadDanyo) 
+    {
         vida -= cantidadDanyo;
         if (vida < 0) {
             vida = 0;
@@ -95,7 +98,8 @@ public class Enemy
 
     // Comprobación de si el enemigo sigue vivo
     // @return "true" si aún le queda vida
-    public boolean isAlive() {
+    public boolean isAlive() 
+    {
         return vida > 0;
     }
 
