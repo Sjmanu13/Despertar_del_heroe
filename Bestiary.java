@@ -1,4 +1,5 @@
 public class Bestiary {
+    // Array para ordenar los encuentros según la dificultad
     private static final int[] ENCUENTROS_PARTIDA = {Enemy.FACIL, Enemy.INTERMEDIO, Enemy.DIFICIL};
 
     // Predefinición de las fichas de los enemigos
@@ -17,7 +18,11 @@ public class Bestiary {
 
     // -------------------- MÉTODOS ----------------------
 
-    // Recojo los enemigos aleatorios por nivel y lo asigno a un array para enviar a Game.java
+    /**
+    * Definicion de los enemigos para partida nueva
+    * Registra los enemigos seleccionados
+    * @return  Array con los enemigos
+    */
     public static Enemy[] generarEnemigos() {
         Enemy[] enemigos = new Enemy[ENCUENTROS_PARTIDA.length];
 
@@ -31,23 +36,30 @@ public class Bestiary {
     }
 
     /**
-    * Crea y asigna el enemigo según su dificultad, si no es de la dificultad pedida, 
-    * repite el proceso hasta que lo sea
-     */
+    * Elige aleatoriamente una ficha del catálogo con la dificultad indicada.
+    * Repite el proceso hasta encontrar una de esa dificultad
+    * @param dificultad FACIL, INTERMEDIO o DIFICIL
+    * @return  clase enemigo que cumple lo pedido
+    */
     private static Enemy elegirFicha(int dificultad) 
     {
-        Enemy ficha;
+        Enemy fichaCandidata;
 
         do 
         {
             int posicionRandom = Dice.roll(1, FICHAS.length) - 1; // Randomiza entre 0 y 8 (9)-1)
-            ficha = FICHAS[posicionRandom];
-        } while (ficha.getDificultad() != dificultad); // Asegurar que el enemigo es de la dificultad pedida
+            fichaCandidata = FICHAS[posicionRandom];
+        } while (fichaCandidata.getDificultad() != dificultad); // Asegurar que el enemigo es de la dificultad pedida
 
-        return ficha; // Te devuelve la clase enemigo
+        return fichaCandidata; // Te devuelve la clase enemigo que corresponde
     }
 
-    // Copia la ficha predefinida dentro del array que se enviará a Game.java
+    /**
+    * Recoge los atributos de la clase del catálogo
+    * Redefine dentro de una nueva clase Enemy para almacenarlo
+    * @param fichaEnemy Enemigo elegido en método (elegirFicha())
+    * @return la ficha elegida (el objeto del catálogo, no una copia)
+    */
     private static Enemy copiarFicha(Enemy fichaEnemy) 
     {
         return new Enemy(
