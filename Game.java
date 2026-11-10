@@ -55,20 +55,38 @@ public class Game {
 
     }
 
-    private static String newPlayer(Scanner sc) 
+    private static Hero newPlayer(Scanner sc) 
     {
-        String nombre = sc.nextLine();
-        if(nombre != null)
-        {
-            
-        }
+        boolean nombreVacio = true;
+        String nombre = "";
+
+        sc.nextLine();                      // limpia el salto de línea que dejó readOption al elegir 
+
+        do {
+            System.out.print("¿Cómo se llama tu héroe? ");
+            nombre = sc.nextLine().trim();   // .trim() quita los espacios de los extremos
+
+            if (nombre.isEmpty())
+            {
+                System.out.println("El nombre no puede estar vacío.");
+            }
+            else
+            {
+                nombreVacio = false;
+            }
+
+        } while (nombreVacio);
+
         Hero heroe = new Hero(nombre);
-        return nombre;
+        System.out.println("\n¡Bienvenido/a, " + heroe.getNombre() + "!");
+        System.out.println("Vida: " + heroe.getVida() + " | CA: " + heroe.getClaseArmadura());
+
+        return heroe;
     }
 
     private static void startGame(Scanner sc)
     {
-        Hero heroe = new Hero()
+        Hero heroe = newPlayer(sc);
         Enemy[] enemigos = Bestiary.generarEnemigos();
     }
 
@@ -121,7 +139,8 @@ public class Game {
     }
 
     // ----------- CHECK -----------
-    private static int readOption(Scanner sc, int numMin, int numMax) {
+    private static int readOption(Scanner sc, int numMin, int numMax) 
+    {
         boolean numValido = false;
         int option = 0;
 
