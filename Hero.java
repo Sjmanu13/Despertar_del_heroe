@@ -69,23 +69,23 @@ public class Hero implements IBasico{
     public int getBonificadorAtaque() {
         return bonificadorAtaque;
     }
-
-    public int[] getPotions() {
-        return potions;
-    }
     
     // ---------------- SETTER ----------------
     /**
     * (setDadosDanyo) aumenta la cantidad de dados al atacar
-    * Suma +1 a dadosDanyo
+    * Añade +1 a dadosDanyo
     */
-    public void upgradeDadosDanyo(int dadosDanyo) {
-        this.dadosDanyo = dadosDanyo;
+    public boolean upgradeDadosDanyo(int dadosDanyo) {
+        if (this.dadosDanyo >= DADOS_DANYO_MAXIMO) {
+        return false;
+    }
+    this.dadosDanyo++;
+    return true;
     }
 
     /**
-    * (setClaseArmadura) aumenta la CA
-    * Suma +1 a claseArmadura
+    * Mejora el daño con un dado más, sin superar el máximo.
+    * @return true si se aplicó; false si ya estaba al máximo
     */
     public void upgradeClaseArmadura(int claseArmadura) {
         this.claseArmadura = claseArmadura;
@@ -93,7 +93,7 @@ public class Hero implements IBasico{
 
     /**
     * (setBonificadorAtaque) aumenta el bonif. de ataque
-    * Suma +1 a bonificadorAtaque
+    * Añade +1 a bonificadorAtaque
     */
     public void upgradeBonificadorAtaque(int bonificadorAtaque) {
         this.bonificadorAtaque = bonificadorAtaque;
@@ -102,7 +102,7 @@ public class Hero implements IBasico{
     /**
     * (setVida) baja la vida actual
     * Recibe daño del enemigo y se le resta a su vida actual
-    * Si el daño es letal o negativo, su vida se queda en 0
+    * Si el daño es letal, su vida se queda en 0
     */
     public void takeDamage(int cantidadDanyo) 
     {
@@ -112,33 +112,10 @@ public class Hero implements IBasico{
         }
     }
 
-    /**
-    * (setVida) sube la vida actual
-    * Bebe la última poción disponible: cura sin superar la vida máxima y la retira del inventario.
-    * Antes de llamarlo hay que comprobar tienePociones() y vidaLlena().
-    * @return vida recuperada
-    */
-    public int usePotion(int[] potions)
-    {
-    int posicion = this.potionRemaining - 1;                  // la última poción ocupada
-    int curacion = Dice.roll(this.potions[posicion], CARAS_CURACION);
-
-    int vidaAntes = this.vida;
-    this.vida += curacion;
-    if (this.vida > this.vidaMaxima) {
-        this.vida = this.vidaMaxima;                               // nunca supera el máximo
-    }
-
-    this.potions[posicion] = 0;                               // la posición queda vacía
-    this.potionRemaining--;
-
-    return this.vida - vidaAntes;
-    }
-
 // ---------------- METODOS ----------------
 
-    // Rellenar pociones iniciales
-    public void prepareInventory()
+    // ---------- STARTER SET UP ----------
+    private void prepareInventory()
     {
         potions = new int[NUM_POCIONES];
 
@@ -150,17 +127,70 @@ public class Hero implements IBasico{
         potionRemaining = NUM_POCIONES;
     }
 
+    // ---------- COMBATE ----------
     public int rollDamage()
     {
         return Dice.roll(dadosDanyo, CARAS_DANYO);
     }
 
+    public void attack(IBasico objetivo)
+    {
+
+        if(!rollToHit(objetivo.getClaseArmadura()) )
+        {
+            System.out.println("Fallaste! ");
+        }
+        else
+        {
+            int danyo = rollDamage();
+            objetivo.takeDamage(danyo);
+            System.out.println("Inflingiste " + danyo + " de daño");
+        }
+    }
+
+    /**
+    * (setVida) sube la vida actual
+    * Bebe la última poción disponible: cura sin superar la vida máxima y la retira del inventario.
+    * Antes de llamarlo hay que comprobar tienePociones() y vidaLlena().
+    * @return vida recuperada
+    */
+    public int usePotion()
+    {
+        if (!hasPotions())
+    {
+        System.out.println("No te quedan pociones.");
+        return 0;
+    }
+
+    if (isFullHealth())
+    {
+        System.out.println("Ya tienes la vida al máximo. No necesitas beber.");
+        return 0;
+    }
+    
+    int posicion = potionRemaining - 1;                  // la última poción ocupada
+    int curacion = Dice.roll(potions[posicion], CARAS_CURACION);
+
+    int vidaAntes = vida;
+    vida += curacion;
+    if (vida > vidaMaxima) {
+        vida = vidaMaxima;                               // nunca supera el máximo
+    }
+
+    potions[posicion] = 0;                               // la posición queda vacía
+    potionRemaining--;
+
+    return vida - vidaAntes;
+    }
+
+
     // ---------- CHECKS ----------
     /**
-    * Indica si se acierta el goolpe (D20 + bon.atak > CA del objetivo)
+    * Indica si se acierta el golpe (D20 + bon.attack >= CA del objetivo)
+    * @param caObjetivo
     * @return true si supera el CA
     */
-    public boolean acierta(int caObjetivo) 
+    public boolean rollToHit(int caObjetivo) 
     {
         int tirada = Dice.roll(1, Dice.D20) + getBonificadorAtaque();
         return tirada >= caObjetivo;
@@ -170,7 +200,7 @@ public class Hero implements IBasico{
     * Indica si al héroe le queda alguna poción.
     * @return true si queda al menos una
     */
-    public boolean tienePociones() {
+    public boolean hasPotions() {
     return potionRemaining > 0;
     }
 
@@ -178,10 +208,9 @@ public class Hero implements IBasico{
     * Indica si el héroe tiene la vida al máximo.
     * @return true si la vida actual es igual a la máxima
     */
-    public boolean vidaLlena() {
+    public boolean isFullHealth() {
     return vida == vidaMaxima;
     }
-
 
     public boolean isAlive()
     {

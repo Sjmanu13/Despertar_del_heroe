@@ -108,8 +108,13 @@ public class Game {
                     break;
 
                     case 2:
-                        heroe.usePotion();
-                        endTurn = true; // Preguntar al profesor
+                        int heal = heroe.usePotion();
+                        
+                        if (heal != 0) {
+                            System.out.println("El heroe toma una poción. Recuperas " + heal + " PV.");
+                            endTurn = true; // Preguntar al profesor
+                        }
+
                     break;
 
                     case 3:
