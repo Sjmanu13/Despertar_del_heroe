@@ -9,7 +9,11 @@ public class Hero implements IBasico{
     private static final int DADOS_DANYO_MAXIMO = 5;
 
     private static final int BONIFICADOR_INICIAL = 3;
+    private static final int BONIFICADOR_ATAQUE_MAXIMO = 6;
+
+    private static final int MEJORA_CA = 2;
     private static final int CA_BASE = 12;
+    private static final int CA_MAXIMO = 18;
 
     private static final int NUM_POCIONES = 3;
     private static final int CARAS_CURACION = Dice.D8;
@@ -75,28 +79,58 @@ public class Hero implements IBasico{
     * (setDadosDanyo) aumenta la cantidad de dados al atacar
     * Añade +1 a dadosDanyo
     */
-    public boolean upgradeDadosDanyo(int dadosDanyo) {
-        if (this.dadosDanyo >= DADOS_DANYO_MAXIMO) {
+    public boolean upgradeDadosDanyo() 
+    {
+        if (getDadosDanyo() < DADOS_DANYO_MAXIMO) 
+        {
+            dadosDanyo++;
+            return true;
+        }
+        else
+        {
+            System.out.println("Tu daño ya está al máximo");
+        }
         return false;
     }
-    this.dadosDanyo++;
-    return true;
-    }
 
     /**
-    * Mejora el daño con un dado más, sin superar el máximo.
+    * Mejora la CA +2, sin superar el máximo.
     * @return true si se aplicó; false si ya estaba al máximo
     */
-    public void upgradeClaseArmadura(int claseArmadura) {
-        this.claseArmadura = claseArmadura;
+    public boolean upgradeClaseArmadura() 
+    {
+        if (getClaseArmadura() < CA_MAXIMO) 
+        {
+            claseArmadura = claseArmadura + MEJORA_CA;
+            if (getClaseArmadura() > CA_MAXIMO) 
+            {
+                claseArmadura = CA_MAXIMO;
+            }
+            return true;
+        }
+        else
+        {
+            System.out.println("Ya llegó al límite");
+        }
+        return false;
     }
 
     /**
-    * (setBonificadorAtaque) aumenta el bonif. de ataque
-    * Añade +1 a bonificadorAtaque
+    * Mejora el bonificador de ataque +1, sin superar el máximo.
+    * @return true si se aplicó; false si ya estaba al máximo
     */
-    public void upgradeBonificadorAtaque(int bonificadorAtaque) {
-        this.bonificadorAtaque = bonificadorAtaque;
+    public boolean upgradeBonificadorAtaque() 
+    {
+        if (getBonificadorAtaque() < BONIFICADOR_ATAQUE_MAXIMO) 
+        {
+            bonificadorAtaque++;
+            return true;
+        }
+        else
+        {
+            System.out.println("Ya llegó al límite");
+        }
+        return false;
     }
 
     /**
@@ -167,7 +201,7 @@ public class Hero implements IBasico{
         System.out.println("Ya tienes la vida al máximo. No necesitas beber.");
         return 0;
     }
-    
+
     int posicion = potionRemaining - 1;                  // la última poción ocupada
     int curacion = Dice.roll(potions[posicion], CARAS_CURACION);
 
