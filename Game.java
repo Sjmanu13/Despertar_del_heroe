@@ -4,12 +4,8 @@ public class Game {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        //
-        int option = readOption(sc, 1, 4);
-        Enemy enemigo1 = new Enemy("Goblin", Enemy.FACIL, 4, 2);
-        Hero heroe = new Hero("Alberto");
-        heroe.attack(enemigo1);
-        enemigo1.attack(heroe);
+        mainMenu(sc);
+        
 
         sc.close();
     }
@@ -20,11 +16,14 @@ public class Game {
         boolean finJuego = false;
 
         do {
+            System.out.println("================================");
             System.out.println("Bienvenido/a a Pick me up");
             System.out.println("\n1.    Nueva Partida");
             System.out.println("2.    Mostrar Ranking");
             System.out.println("3.    Guía");
-            System.out.println("4.    Salir Juego");
+            System.out.println("4.    Salir Juego\n");
+            System.out.println("================================");
+
 
             int option = readOption(sc, 1, 4);
 
@@ -84,10 +83,126 @@ public class Game {
         return heroe;
     }
 
+    private static boolean simulateCombat(Scanner sc, Hero heroe, Enemy enemigo)
+    {
+        boolean huida = false;
+
+        while (heroe.isAlive() && enemigo.isAlive() && !huida ) {
+
+            boolean endTurn = false;
+
+            // Turno Heroe
+            do {
+
+                showStatus(heroe, enemigo);
+
+                showCombatActions();
+
+                int action = readOption(sc, 1, 4);
+                
+                switch (action) 
+                {
+                    case 1:
+                        heroe.attack(enemigo);
+                        endTurn = true;
+                    break;
+
+                    case 2:
+                        heroe.usePotion();
+                        endTurn = true; // Preguntar al profesor
+                    break;
+
+                    case 3:
+                        System.out.println("El heroe esta viendo el inventario");
+                    break;
+
+                    case 4:
+                        huida = true;
+                        endTurn = true;
+                    break;
+
+                    default:
+                    break;
+                }
+
+            } while (!endTurn);
+            if (enemigo.isAlive()) {
+                enemigo.attack(heroe);
+            }
+            else{
+                System.out.println(enemigo.getNombre() + " fue derrtoado.\n");
+            }
+        } 
+        if (huida) 
+        {
+            System.out.println("\nEl heroe se vió superado por este mundo y decidió escapar");
+            return huida;
+        }
+        
+
+        return false;
+    }
+
+    /**
+    * Muestra la vida del héroe y del enemigo al inicio de cada turno.
+    * @param heroe héroe del jugador
+    * @param enemigo enemigo del combate actual
+    */
+    private static void showStatus(Hero heroe, Enemy enemigo)
+    {
+        System.out.println("\n--------------------------------");
+        System.out.println(heroe.getNombre() + ": " + heroe.getVida() + "/" + heroe.getVidaMaxima() + " PV");
+        System.out.println(enemigo.getNombre() + ": " + enemigo.getVida() + " PV");
+        System.out.println("--------------------------------");
+    }
+
+    private static void showCombatActions()
+    {
+        System.out.println("\n¿Qué es  lo que hará el heroe?");
+        System.out.println("\n--------------------------------");
+        System.out.println("1. Atacar");
+        System.out.println("2. Usar Poción");
+        System.out.println("3. Ver Inventario");
+        System.out.println("4. Huir");
+        System.out.println("--------------------------------");
+
+    }
+
     private static void startGame(Scanner sc)
     {
         Hero heroe = newPlayer(sc);
         Enemy[] enemigos = Bestiary.generarEnemigos();
+
+        int enemigosDerrotados = 0;
+        boolean haHuido = false;
+        int i = 0;
+
+        while(i < enemigos.length && heroe.isAlive() && !haHuido)
+            {
+                Enemy enemigo = enemigos[i];
+
+                System.out.println("\n=== Combate " + (i + 1) + " de " + enemigos.length + ": aparece " + enemigo.getNombre() + " ===");
+
+                haHuido = simulateCombat(sc, heroe, enemigo);
+
+                if (!enemigo.isAlive()) {
+                    enemigosDerrotados++;
+                }
+
+                i++;
+            }
+            if (haHuido) {
+                System.out.println("El heroe huyó tras esa fatídica derrota y decidio retirarse de este mundo");
+                System.out.println("TRY AGAIN");
+            }
+            if (!heroe.isAlive()) {
+                System.out.println("El heroe cayó en combate y fue guiado por la diosa");
+                System.out.println("TRY AGAIN");
+            }
+            if (enemigosDerrotados == enemigos.length) {
+                System.out.println("El heroe superó las pruebas y pudo regresar a lo que podía llamar hogar");
+                System.out.println("VICTORIA");
+            }
     }
 
     private static void showHelp() 
@@ -145,7 +260,7 @@ public class Game {
         int option = 0;
 
         do {
-            System.out.print("¿Que opción eliges? ");
+            System.out.print("\n¿Que opción eliges? ");
 
             if (sc.hasNextInt()) {
                 option = sc.nextInt();
@@ -153,7 +268,7 @@ public class Game {
                 if (option >= numMin && option <= numMax) {
                     numValido = true;
                 } else {
-                    System.out.println("Elige una opción entre " + numMin + " y " + numMax + ".");
+                    System.out.println("Elige una número entre " + numMin + " y " + numMax + ".");
                 }
             } else {
                 sc.next();
@@ -164,6 +279,7 @@ public class Game {
 
         return option;
     }
+
 
     private static boolean endGame() 
     {
