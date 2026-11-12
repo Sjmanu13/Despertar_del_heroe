@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ranking>
+    <rank position="01">
+        <name> John Joe</name>
+        <points>0</points>
+    </rank>
+
+    <rank position="02">
+        <name></name>
+        <points>0</points>
+    </rank>
+
+    <rank position="03">
+        <name></name>
+        <points>0</points>
+    </rank>
+
+    <rank position="04">
+        <name></name>
+        <points>0</points>
+    </rank>
+
+    <rank position="05">
+        <name></name>
+        <points>0</points>
+    </rank>
+
+    <rank position="06">
+        <name></name>
+        <points>0</points>
+    </rank>
+
+    <rank position="07">
+        <name></name>
+        <points>0</points>
+    </rank>
+
+    <rank position="08">
+        <name></name>
+        <points>0</points>
+    </rank>
+
+    <rank position="09">
+        <name></name>
+        <points>0</points>
+    </rank>
+
+    <rank position="10">
+        <name></name>
+        <points>0</points>
+    </rank>
+</ranking>
