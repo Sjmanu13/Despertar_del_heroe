@@ -1,4 +1,4 @@
-public class Enemy 
+public class Enemy implements IBasico
 {
     // Nivel de dificultad
     public static final int FACIL = 1;
@@ -79,9 +79,24 @@ public class Enemy
         return min + Dice.roll(1, max - min + 1) - 1;   
     }
 
-    // Comprobación si el golpe acierta (D20 + mod. ataque > clase_armadura)
-    // @return true si el total iguala o supera esa clase de armadura
-    public boolean acierta(int caObjetivo) 
+    
+    public void attack(IBasico objetivo)
+    {
+
+        if(!rollToHit(objetivo.getClaseArmadura()) )
+        {
+            System.out.println("Falló! ");
+        }
+        else
+        {
+            int danyo = rollDamage();
+            objetivo.takeDamage(danyo);
+            System.out.println("Recibiste " + danyo + " de daño");
+        }
+        
+    }
+
+    public boolean rollToHit(int caObjetivo)
     {
         int tirada = Dice.roll(1, Dice.D20) + getBonoAtaque();
         return tirada >= caObjetivo;

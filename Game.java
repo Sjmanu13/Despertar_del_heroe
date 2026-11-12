@@ -1,12 +1,16 @@
 import java.util.Scanner;
 
 public class Game {
+    // Atributos para puntuación
+    private static final int PUNTOS_BASE = 100;
+    private static final int PENALIZACION_POR_TURNO = 5;
+    private static final int DESCUENTO_MAXIMO = 40;
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         mainMenu(sc);
         
-
         sc.close();
     }
 
@@ -83,19 +87,19 @@ public class Game {
         return heroe;
     }
 
-    private static boolean simulateCombat(Scanner sc, Hero heroe, Enemy enemigo)
+    private static int simulateCombat(Scanner sc, Hero heroe, Enemy enemigo)
     {
         boolean huida = false;
+        int turnos = 0;
 
-        while (heroe.isAlive() && enemigo.isAlive() && !huida ) {
-
+        while (heroe.isAlive() && enemigo.isAlive() && !huida ) 
+        {
             boolean endTurn = false;
 
             // Turno Heroe
             do {
 
                 showStatus(heroe, enemigo);
-
                 showCombatActions();
 
                 int action = readOption(sc, 1, 4);
@@ -109,12 +113,11 @@ public class Game {
 
                     case 2:
                         int heal = heroe.usePotion();
-                        
-                        if (heal != 0) {
+                        if (heal != 0) 
+                        {
                             System.out.println("El heroe toma una poción. Recuperas " + heal + " PV.");
                             endTurn = true; // Preguntar al profesor
                         }
-
                     break;
 
                     case 3:
@@ -125,27 +128,22 @@ public class Game {
                         huida = true;
                         endTurn = true;
                     break;
-
-                    default:
-                    break;
                 }
-
+            // Fin turno heroe
             } while (!endTurn);
-            if (enemigo.isAlive()) {
+
+            turnos++;
+
+            // Turno enemigo
+            if (enemigo.isAlive() && !huida) {
                 enemigo.attack(heroe);
             }
-            else{
-                System.out.println(enemigo.getNombre() + " fue derrtoado.\n");
+            else if (!enemigo.isAlive()) {
+            System.out.println(enemigo.getNombre() + " fue derrotado.\n");
             }
-        } 
-        if (huida) 
-        {
-            System.out.println("\nEl heroe se vió superado por este mundo y decidió escapar");
-            return huida;
         }
         
-
-        return false;
+        return turnos;
     }
 
     /**
@@ -179,35 +177,85 @@ public class Game {
         Enemy[] enemigos = Bestiary.generarEnemigos();
 
         int enemigosDerrotados = 0;
+        int totalScore = 0;
         boolean haHuido = false;
         int i = 0;
 
+        System.out.println(" ");
+        upgradeStep(sc, heroe);
+
         while(i < enemigos.length && heroe.isAlive() && !haHuido)
+        {
+            Enemy enemigo = enemigos[i];
+
+            System.out.println("\n=== Combate " + (i + 1) + " de " + enemigos.length + ": aparece " + enemigo.getNombre() + " ===");
+            
+            int turnosUsados = simulateCombat(sc, heroe, enemigo);
+            haHuido = heroe.isAlive() && enemigo.isAlive();
+
+            if (!enemigo.isAlive()) 
             {
-                Enemy enemigo = enemigos[i];
-
-                System.out.println("\n=== Combate " + (i + 1) + " de " + enemigos.length + ": aparece " + enemigo.getNombre() + " ===");
-
-                haHuido = simulateCombat(sc, heroe, enemigo);
-
-                if (!enemigo.isAlive()) {
-                    enemigosDerrotados++;
+                // Cuando derrota al enemigo se abre la mejora
+                enemigosDerrotados++;
+                totalScore += calculateScore(enemigo.getDificultad(), turnosUsados);
+                
+                if (i < enemigos.length -1) 
+                {
+                    System.out.println("Subiste de piso y te sientes con más fuerzas después de haber derrotado a aquel monstruo.");
+                    upgradeStep(sc, heroe);
                 }
+            }
 
-                i++;
+            i++;
+        }
+        
+        if (enemigosDerrotados == enemigos.length)
+        {
+            System.out.println("\nEl héroe superó las pruebas y pudo regresar a lo que podía llamar hogar.");
+            System.out.println("VICTORIA");
+        }
+        else if (haHuido)
+        {
+            System.out.println("\nEl héroe huyó tras esa fatídica derrota y decidió retirarse de este mundo.");
+            System.out.println("TRY AGAIN");
+        }
+        else
+        {
+            System.out.println("\nEl héroe cayó en combate y fue guiado por la diosa.");
+            System.out.println("TRY AGAIN");
+        }
+
+        System.out.println("Enemigos derrotados: " + enemigosDerrotados + " de " + enemigos.length);
+        System.out.println("Puntuación final: " + totalScore);
+    }
+
+    private static void upgradeStep(Scanner sc, Hero heroe)
+    {
+        boolean upgradeAplicado = false;
+        do {
+            System.out.println("Tu heroe se ha fortalecido, elige su mejora: ");
+            System.out.println("1. +2 en Clase de Armadura");
+            System.out.println("2. +1 Bonificador de Ataque");
+            System.out.println("3. +1 Dado de ataque");
+    
+            int option = readOption(sc, 1, 3);
+    
+            switch (option) {
+                case 1:
+                    upgradeAplicado = heroe.upgradeClaseArmadura();
+                break;
+                case 2:
+                    upgradeAplicado = heroe.upgradeBonificadorAtaque();
+                break;
+                case 3:
+                    upgradeAplicado = heroe.upgradeDadosDanyo();
+                break;
+            
+                default:
+                break;
             }
-            if (haHuido) {
-                System.out.println("El heroe huyó tras esa fatídica derrota y decidio retirarse de este mundo");
-                System.out.println("TRY AGAIN");
-            }
-            if (!heroe.isAlive()) {
-                System.out.println("El heroe cayó en combate y fue guiado por la diosa");
-                System.out.println("TRY AGAIN");
-            }
-            if (enemigosDerrotados == enemigos.length) {
-                System.out.println("El heroe superó las pruebas y pudo regresar a lo que podía llamar hogar");
-                System.out.println("VICTORIA");
-            }
+        } while (!upgradeAplicado);
+
     }
 
     private static void showHelp() 
@@ -285,9 +333,15 @@ public class Game {
         return option;
     }
 
-
-    private static boolean endGame() 
+    private static int calculateScore( int diffEnemigo, int turn)
     {
-        return false;
+        int valorEnemigo = PUNTOS_BASE * diffEnemigo;
+        int descuento = turn * PENALIZACION_POR_TURNO;
+
+        if (descuento > DESCUENTO_MAXIMO)
+        {
+            descuento = DESCUENTO_MAXIMO;
+        }
+        return valorEnemigo * (100 - descuento) / 100;   // multiplicar antes de dividir
     }
 }
