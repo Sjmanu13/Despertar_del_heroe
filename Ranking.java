@@ -12,17 +12,30 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+    /**
+    * Ranking de las 10 mejores partidas del juego.
+    * Guarda hasta 'CAPACIDAD' registros en dos arrays paralelos (nombres y puntos)
+    * Ordenados de mayor a menor puntuación.
+    * Se conservan en ranking.xml, que se lee y se modifica con DOM.
+    */
 public class Ranking {
 
+    // Archivo XML donde se guarda el ranking
     private static final String ARCHIVO = "ranking.xml";
 
+    // Número máximo de registros del ranking
     private static final int CAPACIDAD = 10;
 
-    // Arrays paralelos: la posición i de los dos arrays es el mismo jugador
+    // Arrays paralelos
     private String[] nombres;
     private int[] puntos;
-    private int total; // cuántas posiciones están ocupadas
+    
+    // Posiciones Ocupadas
+    private int total;          
 
+    /**
+     * [ia] Crea un ranking vacío, con espacio para CAPACIDAD registros.
+     */
     public Ranking() 
     {
         nombres = new String[CAPACIDAD];
@@ -30,14 +43,20 @@ public class Ranking {
         total = 0;
     }
 
-
-    public void load() 
+    /**
+     * Carga el ranking desde el archivo XML.
+     * Copia en los arrays los registros que tienen nombre.
+     * En el orden en que aparecen en el archivo.
+     * Los huecos con el nombre vacío los ignora.
+     * Si el archivo no existe, el ranking se queda vacío.
+     */
+    public boolean load() 
     {
         File archivo = new File(ARCHIVO);
         if (!archivo.exists()) 
         {
             System.out.println("No se ha encontrado " + ARCHIVO + ". El ranking empieza vacío.");
-            return;
+            return false;
         }
 
         try 
@@ -73,10 +92,14 @@ public class Ranking {
                     total++;
                 }
             }
+
+            // En caso que se cumpla todo correcto
+            return true;
         } 
         catch (Exception e) 
         {
             System.out.println("Error al leer el ranking: " + e.getMessage());
+            return false;
         }
     }
 
@@ -184,7 +207,10 @@ public class Ranking {
 
     }
 
-    // Método mostrar ranking
+    /**
+     * Muestra el ranking: posición, nombre y puntos de cada registro.
+     * Si no hay ningún registro, muestra un mensaje informativo.
+     */
     public void show()
     {
         System.out.println("========== RANKING ==========");
@@ -204,8 +230,46 @@ public class Ranking {
         System.out.println("=============================");
     }
 
-    private void reorder(String[] nombres, int[] puntos)
+    /**
+    * Ordena el ranking de mayor a menor puntuación (método de la burbuja).
+    * En los empates mantiene delante el registro más antiguo.
+    */
+    private void reorder()
     {
-        
+        // [ia] bucle de vueltas recorridas hasta total de jugadores en ranking (0-10)
+        for (int i = 0; i < total - 1; i++)
+        {
+            // Recorre y se reduce por cada heroe que ordena
+            for (int j = 0; j < total - 1 - i; j++) 
+            {
+                // Si el de delante tiene menos que  el de atrás, se intercambian el puesto
+                // No es ("<=") porque el jugador antiguo prevalece en su sitio en caso de empate
+                if (puntos[j] < puntos[j + 1])
+                {
+                    // Intercambiar nombres
+                    String nombreAux = nombres[j];
+                    nombres[j] = nombres[j + 1];
+                    nombres[j + 1] = nombreAux;
+
+                    // Intercambiar puntos
+                    int puntosAux = puntos[j];
+                    puntos[j] = puntos[j + 1];
+                    puntos[j + 1] = puntosAux;
+                }
+            }
+        }
+    }
+
+    /**
+    * Recarga el ranking desde el XML, lo ordena y reescribe el XML ya ordenado.
+    * Así se recogen y colocan en su sitio los cambios hechos a mano en el archivo.
+    */
+    public void reload()
+    {
+        if (load())
+        {
+            reorder();    
+            save();       
+        }
     }
 }
