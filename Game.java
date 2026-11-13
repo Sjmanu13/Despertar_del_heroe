@@ -225,7 +225,7 @@ public class Game {
                         if (heal != 0) 
                         {
                             System.out.println("El heroe toma una poción. Recuperas " + heal + " PV.");
-                            endTurn = true; // Preguntar al profesor
+                            endTurn = true;
                         }
                     break;
 
