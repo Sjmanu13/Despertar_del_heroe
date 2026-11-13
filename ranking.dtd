@@ -1,0 +1,7 @@
+<!ELEMENT ranking (rank+)>
+<!ELEMENT rank (name, points)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT points (#PCDATA)>
+
+<!ATTLIST rank
+    position CDATA #REQUIRED>
