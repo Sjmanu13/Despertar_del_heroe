@@ -28,7 +28,8 @@ bin/
 target/
 
 # IDE (Visual Studio Code)
-.vscode/
+.vscode/*
+!.vscode/tasks.json
 
 # Windows
 Thumbs.db
