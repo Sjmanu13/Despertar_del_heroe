@@ -1,6 +1,6 @@
 public class Hero implements IBasico{
 
-    // ATRIBUTOS FIJOS
+    // -=-=-=-=-=-=- ATRIBUTOS FIJOS -=-=-=-=-=-=-
     private static final int CARAS_VIDA = Dice.D10;
     private static final int DADOS_VIDA = 20; 
     
@@ -19,7 +19,7 @@ public class Hero implements IBasico{
     private static final int CARAS_CURACION = Dice.D8;
     private static final int DADOS_CURACION = 5;
     
-    // ATRIBUTOS VARIABLES
+    // -=-=-=-=-=-=- ATRIBUTOS VARIABLES -=-=-=-=-=-=-
     private String nombre;
 
     private int vida;
@@ -32,7 +32,7 @@ public class Hero implements IBasico{
     private int[] potions;
     private int potionRemaining;
     
-    // ---------------- CONSTRUCTOR ----------------
+    // -=-=-=-=-=-=- CONSTRUCTOR -=-=-=-=-=-=-
     public Hero (String nombre)
     {
         this.nombre = nombre;
@@ -46,10 +46,8 @@ public class Hero implements IBasico{
 
         this.prepareInventory();
     }
-
-
     
-    // ---------------- GETTER ----------------
+    // -=-=-=-=-=-=- GETTER -=-=-=-=-=-=-
     public String getNombre() {
         return nombre;
     }
@@ -73,10 +71,12 @@ public class Hero implements IBasico{
     public int getBonificadorAtaque() {
         return bonificadorAtaque;
     }
-    
-    // ---------------- SETTER ----------------
+
+    // -=-=-=-=-=-=- METODOS -=-=-=-=-=-=-
+
+    // -------- UPGRADES --------
     /**
-    * (setDadosDanyo) aumenta la cantidad de dados al atacar
+    * Aumenta la cantidad de dados al atacar
     * Añade +1 a dadosDanyo
     */
     public boolean upgradeDadosDanyo() 
@@ -133,22 +133,7 @@ public class Hero implements IBasico{
         return false;
     }
 
-    /**
-    * (setVida) baja la vida actual
-    * Recibe daño del enemigo y se le resta a su vida actual
-    * Si el daño es letal, su vida se queda en 0
-    */
-    public void takeDamage(int cantidadDanyo) 
-    {
-        vida -= cantidadDanyo;
-        if (vida < 0) {
-            vida = 0;
-        }
-    }
-
-// ---------------- METODOS ----------------
-
-    // ---------- STARTER SET UP ----------
+    // -------- START GAME --------
     private void prepareInventory()
     {
         potions = new int[NUM_POCIONES];
@@ -161,7 +146,31 @@ public class Hero implements IBasico{
         potionRemaining = NUM_POCIONES;
     }
 
-    // ---------- COMBATE ----------
+    /**
+    * Muestra las pociones que le quedan al héroe, recorriendo solo las posiciones no usadas.
+    * Si no queda ninguna, muestra un aviso.
+    */
+    public void showInventory()
+    {
+        System.out.println("\n--- INVENTARIO ---");
+
+        if (potionRemaining == 0)
+        {
+            System.out.println("Tu inventario está vacío.");
+        }
+        else
+        {
+            for (int i = 0; i < potionRemaining; i++)
+            {
+                System.out.println("Poción " + (i + 1) + ": cura " + potions[i] + "d" + CARAS_CURACION);
+            }
+        }
+
+        System.out.println("Pociones restantes: " + potionRemaining + " de " + NUM_POCIONES);
+    }
+
+    // -------- COMBAT --------
+
     public int rollDamage()
     {
         return Dice.roll(dadosDanyo, CARAS_DANYO);
@@ -217,6 +226,18 @@ public class Hero implements IBasico{
     return vida - vidaAntes;
     }
 
+    /**
+    * Baja la vida actual
+    * Recibe daño del enemigo y se le resta a su vida actual
+    * Si el daño es letal, su vida se queda en 0
+    */
+    public void takeDamage(int cantidadDanyo) 
+    {
+        vida -= cantidadDanyo;
+        if (vida < 0) {
+            vida = 0;
+        }
+    }
 
     // ---------- CHECKS ----------
     /**
