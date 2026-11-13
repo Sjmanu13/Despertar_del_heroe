@@ -64,7 +64,7 @@ public class Ranking {
             // Abrir el XML 
             DocumentBuilderFactory fabrica = DocumentBuilderFactory.newInstance();
 
-            fabrica.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            fabrica.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 
             DocumentBuilder constructor = fabrica.newDocumentBuilder();
             Document documento = constructor.parse(archivo);
@@ -116,7 +116,7 @@ public class Ranking {
             File archivo = new File(ARCHIVO);
             
             DocumentBuilderFactory fabrica = DocumentBuilderFactory.newInstance();
-            fabrica.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            fabrica.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
             DocumentBuilder constructor = fabrica.newDocumentBuilder();
             Document documento = constructor.parse(archivo);
             documento.getDocumentElement().normalize();
@@ -147,6 +147,7 @@ public class Ranking {
             Transformer transformer = transformerFabrica.newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "no"); // respeta el formato escrito a mano
             transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+            transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "ranking.dtd");
 
             DOMSource origen = new DOMSource(documento);
             StreamResult destino = new StreamResult(archivo);
