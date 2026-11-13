@@ -9,14 +9,17 @@ public class Game {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        mainMenu(sc);
+        Ranking ranking = new Ranking();
+        ranking.load();
+
+        mainMenu(sc, ranking);
         
         sc.close();
     }
 
     // ----------- Métodos -----------
 
-    private static void mainMenu(Scanner sc) {
+    private static void mainMenu(Scanner sc, Ranking ranking) {
         boolean finJuego = false;
 
         do {
@@ -34,11 +37,11 @@ public class Game {
             switch (option) {
 
                 case 1:
-                    startGame(sc);
+                    startGame(sc, ranking);
                     break;
 
                 case 2:
-                    System.out.println("Ranking Proximamente");
+                    ranking.show();
                     break;
 
                 case 3:
@@ -171,7 +174,7 @@ public class Game {
 
     }
 
-    private static void startGame(Scanner sc)
+    private static void startGame(Scanner sc, Ranking ranking)
     {
         Hero heroe = newPlayer(sc);
         Enemy[] enemigos = Bestiary.generarEnemigos();
@@ -227,6 +230,9 @@ public class Game {
 
         System.out.println("Enemigos derrotados: " + enemigosDerrotados + " de " + enemigos.length);
         System.out.println("Puntuación final: " + totalScore);
+
+        ranking.add(heroe.getNombre(), totalScore); 
+        ranking.save();
     }
 
     private static void upgradeStep(Scanner sc, Hero heroe)

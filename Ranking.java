@@ -30,6 +30,7 @@ public class Ranking {
         total = 0;
     }
 
+
     public void load() 
     {
         File archivo = new File(ARCHIVO);
@@ -90,6 +91,7 @@ public class Ranking {
         {
             // Abrir el XML que ya existe
             File archivo = new File(ARCHIVO);
+            
             DocumentBuilderFactory fabrica = DocumentBuilderFactory.newInstance();
             fabrica.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
             DocumentBuilder constructor = fabrica.newDocumentBuilder();
@@ -132,5 +134,78 @@ public class Ranking {
         {
             System.out.println("Error al guardar el ranking: " + e.getMessage());
         }
+    }
+
+    /**
+    * Añade una partida al ranking manteniendo el orden de mayor a menor.
+    * El nuevo se coloca al final y va subiendo mientras el de delante tenga menos puntos.
+    * Si el ranking está lleno, solo entra si supera a la última puntuación.
+    * En los empates, el registro más antiguo queda delante.
+    * @param nombre nombre del héroe
+    * @param puntuacion puntos obtenidos en la partida
+    */
+    public void add(String nombre, int puntuacion) // (hero.getNombre(), totalScore)
+    {
+        int i;
+        if (total < CAPACIDAD)
+        {
+            i = total;                  
+            total++;
+        }
+        else
+        {
+            if (puntuacion <= puntos[CAPACIDAD - 1])
+            {
+                System.out.println("Tu puntuación no ha entrado en el top " + CAPACIDAD + ".");
+                return;                 // lleno y no supera al último: no entra
+            }
+            i = CAPACIDAD - 1;          // lleno: ocupa la posición del último
+        }  
+
+        nombres[i] = nombre;
+        puntos[i] = puntuacion;
+
+        while (i > 0 && puntos[i - 1] < puntos[i])
+        {
+            // Intercambiar con el de delante (nombre y puntos)
+            String nombreAux = nombres[i];
+            nombres[i] = nombres[i - 1];
+            nombres[i - 1] = nombreAux;
+
+            int puntosAux = puntos[i];
+            puntos[i] = puntos[i - 1];
+            puntos[i - 1] = puntosAux;
+
+            i--;
+        }
+
+        System.out.println("Enhorabuena! Has entrado en el ranking en la posición " + (i + 1) + ".");
+
+
+    }
+
+    // Método mostrar ranking
+    public void show()
+    {
+        System.out.println("========== RANKING ==========");
+        
+        if (total != 0) {
+
+            for (int i = 0; i < total; i++) {
+                System.out.println((i+1) + ". " + nombres[i] + "      " + puntos[i] + " puntos");
+            }
+
+        }
+        else
+        {
+                System.out.println("Sin heroes registrados");
+        }
+
+        System.out.println("=============================");
+    }
+
+    private void reorder(String[] nombres, int[] puntos)
+    {
+        
     }
 }

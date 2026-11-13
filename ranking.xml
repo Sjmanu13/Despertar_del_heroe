@@ -1,53 +1,51 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<ranking>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><ranking>
     <rank position="01">
-        <name> John Joe</name>
-        <points>0</points>
+        <name>Idrial</name>
+        <points>490</points>
     </rank>
 
     <rank position="02">
-        <name></name>
-        <points>0</points>
+        <name>Baylen</name>
+        <points>485</points>
     </rank>
 
     <rank position="03">
-        <name></name>
-        <points>0</points>
+        <name>Benethor</name>
+        <points>460</points>
     </rank>
 
     <rank position="04">
-        <name></name>
-        <points>0</points>
+        <name>Gandalf</name>
+        <points>455</points>
     </rank>
 
     <rank position="05">
-        <name></name>
-        <points>0</points>
+        <name>Morgh</name>
+        <points>445</points>
     </rank>
 
     <rank position="06">
-        <name></name>
-        <points>0</points>
+        <name>Eoxis</name>
+        <points>440</points>
     </rank>
 
     <rank position="07">
-        <name></name>
-        <points>0</points>
+        <name>Arkan</name>
+        <points>425</points>
     </rank>
 
     <rank position="08">
-        <name></name>
-        <points>0</points>
+        <name>Chandra</name>
+        <points>415</points>
     </rank>
 
     <rank position="09">
-        <name></name>
-        <points>0</points>
+        <name>Beneth</name>
+        <points>395</points>
     </rank>
 
     <rank position="10">
-        <name></name>
-        <points>0</points>
+        <name>1</name>
+        <points>370</points>
     </rank>
 </ranking>
