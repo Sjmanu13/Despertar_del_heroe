@@ -10,7 +10,7 @@ public class Game {
         Scanner sc = new Scanner(System.in);
 
         Ranking ranking = new Ranking();
-        ranking.load();
+        ranking.reload();
 
         mainMenu(sc, ranking);
         
@@ -41,6 +41,7 @@ public class Game {
                     break;
 
                 case 2:
+                    ranking.reload();
                     ranking.show();
                     break;
 
