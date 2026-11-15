@@ -88,7 +88,7 @@ public class Hero implements IBasico{
         }
         else
         {
-            System.out.println("Tu daño ya está al máximo");
+            System.out.println(Color.AMARILLO + "Tu daño ya está al máximo." + Color.RESET);
         }
         return false;
     }
@@ -110,7 +110,7 @@ public class Hero implements IBasico{
         }
         else
         {
-            System.out.println("Ya llegó al límite");
+            System.out.println(Color.AMARILLO + "Tu clase de armadura ya está al máximo." + Color.RESET);
         }
         return false;
     }
@@ -128,7 +128,7 @@ public class Hero implements IBasico{
         }
         else
         {
-            System.out.println("Ya llegó al límite");
+            System.out.println(Color.AMARILLO + "Tu bonificador de ataque ya está al máximo." + Color.RESET);
         }
         return false;
     }
@@ -152,7 +152,7 @@ public class Hero implements IBasico{
     */
     public void showInventory()
     {
-        System.out.println("\n--- INVENTARIO ---");
+                System.out.println(Color.title("INVENTARIO", Color.AMARILLO));
 
         if (potionRemaining == 0)
         {
@@ -162,11 +162,11 @@ public class Hero implements IBasico{
         {
             for (int i = 0; i < potionRemaining; i++)
             {
-                System.out.println("Poción " + (i + 1) + ": cura " + potions[i] + "d" + CARAS_CURACION);
+                System.out.println("   " + Color.VERDE + "■ " + Color.RESET + "Poción " + (i + 1) + ": cura " + potions[i] + "d" + CARAS_CURACION);
             }
         }
 
-        System.out.println("Pociones restantes: " + potionRemaining + " de " + NUM_POCIONES);
+        System.out.println(Color.separator());
     }
 
     // -------- COMBAT --------
@@ -181,13 +181,13 @@ public class Hero implements IBasico{
 
         if(!rollToHit(objetivo.getClaseArmadura()) )
         {
-            System.out.println("¡Fallaste! ");
+            System.out.println(Color.GRIS + "· ¡Fallaste!" + Color.RESET);
         }
         else
         {
             int danyo = rollDamage();
             objetivo.takeDamage(danyo);
-            System.out.println("Inflingiste " + danyo + " de daño.");
+            System.out.println(Color.AMARILLO + "» Infligiste " + danyo + " de daño." + Color.RESET);
         }
     }
 
@@ -201,7 +201,7 @@ public class Hero implements IBasico{
     {
         if (!hasPotions())
     {
-        System.out.println("No te quedan pociones.");
+        System.out.println(Color.AMARILLO + "Ya tienes la vida al máximo. No necesitas beber." + Color.RESET);
         return 0;
     }
 
