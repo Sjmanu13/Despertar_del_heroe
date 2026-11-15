@@ -40,15 +40,17 @@ public class Story {
     */
     public static void showPrologue(Hero heroe)
     {
-        System.out.println("\nAbres los ojos sobre una piedra fría. No recuerdas cómo has llegado hasta aquí.");
-        System.out.println("Una ventana azul se despliega frente a ti.\n");
-        System.out.println("[SISTEMA] Bienvenido/a, " + heroe.getNombre() + ". Has sido invocado/a como héroe.");
-        System.out.println("[SISTEMA] Vida: " + heroe.getVida() 
-                                + " | CA: " + heroe.getClaseArmadura()
-                                + " | Ataque: +" + heroe.getBonificadorAtaque());
+        System.out.println("\n" + Color.CURSIVA + "Abres los ojos sobre una piedra fría. No recuerdas cómo has llegado hasta aquí." + Color.RESET);
+        System.out.println(Color.CURSIVA + "Una ventana azul se despliega frente a ti." + Color.RESET + "\n");
+        System.out.println(Color.SISTEMA + " Bienvenido/a, " + Color.CIAN + Color.NEGRITA + heroe.getNombre() 
+                                                            + Color.RESET + ". Has sido invocado/a como héroe.");
 
-        System.out.println("[SISTEMA] Tutorial iniciado: supera tres stages para despertar tu verdadero poder.");
-        System.out.println("[SISTEMA] Antes de empezar, elige tu primera mejora.\n");
+        System.out.println(Color.SISTEMA + " " + Color.ROJO + "■" + Color.RESET + " Vida: " + heroe.getVida()
+                                                                                + " | CA: " + heroe.getClaseArmadura()
+                                                                                + " | Ataque: +" + heroe.getBonificadorAtaque());
+
+        System.out.println(Color.SISTEMA + " Tutorial iniciado: supera tres stages para despertar tu verdadero poder.");
+        System.out.println(Color.SISTEMA + " Antes de empezar, elige tu primera mejora.\n");
     }
 
     /**
@@ -60,15 +62,20 @@ public class Story {
     {
         if (stage >= 0 && stage < INTRO_STAGE.length)
         {
-            System.out.println("\n========== STAGE " + (stage + 1) + " · " + NOMBRES_STAGE[stage] + " ==========");
-            System.out.println(INTRO_STAGE[stage]);
+            System.out.println("\n" + Color.title("STAGE " + (stage + 1), Color.AMARILLO));
+
+            System.out.println(Color.AMARILLO + Color.CURSIVA + Color.center(NOMBRES_STAGE[stage]) + Color.RESET);
+
+            System.out.println();
+
+            System.out.println(Color.CURSIVA + INTRO_STAGE[stage] + Color.RESET);
         }
         else
         {
-            System.out.println("\n========== STAGE " + (stage + 1) + " ==========");
+            System.out.println("\n" + Color.title("STAGE " + (stage + 1), Color.AMARILLO));
         }
 
-        System.out.println("¡Aparece " + nombreEnemigo + "!");
+        System.out.println("¡Aparece " + Color.ROJO + Color.NEGRITA + nombreEnemigo + Color.RESET + "!");
     }
 
     /**
@@ -77,12 +84,13 @@ public class Story {
     */
     public static void showCamp(int stage)
     {
+        System.out.println("\n" + Color.title("CAMPAMENTO", Color.AMARILLO));
         if (stage >= 0 && stage < CAMPAMENTO.length)
         {
-            System.out.println("\n" + CAMPAMENTO[stage]);
+            System.out.println("\n" + Color.CURSIVA + CAMPAMENTO[stage] + Color.RESET);
         }
 
-        System.out.println("[SISTEMA] Stage " + (stage + 1) + " superada. Elige una mejora.\n");
+        System.out.println("\n" + Color.SISTEMA + " Stage " + (stage + 1) + " superada. Elige una mejora.\n");
     }
 
     /**
@@ -90,10 +98,10 @@ public class Story {
     */
     public static void showVictory()
     {
-        System.out.println("\n[SISTEMA] Tutorial completado.");
-        System.out.println("La ventana se apaga y, por primera vez, el silencio no da miedo.");
-        System.out.println("Esto solo es el principio.");
-        System.out.println("VICTORIA");
+        System.out.println("\n" + Color.SISTEMA + " Tutorial completado.");
+        System.out.println(Color.CURSIVA + "La ventana se apaga y, por primera vez, el silencio no da miedo." + Color.RESET);
+        System.out.println(Color.CURSIVA + "Esto solo es el principio." + Color.RESET);
+        System.out.println("\n" + Color.title("VICTORIA", Color.VERDE));
     }
 
     /**
@@ -101,9 +109,9 @@ public class Story {
     */
     public static void showDefeat()
     {
-        System.out.println("\nTodo se vuelve negro.");
-        System.out.println("[SISTEMA] El héroe ha caído. Reiniciando tutorial...");
-        System.out.println("DERROTA");
+        System.out.println("\n" + Color.CURSIVA + "Todo se vuelve negro." + Color.RESET);
+        System.out.println(Color.SISTEMA + " El héroe ha caído. Reiniciando tutorial...");
+        System.out.println("\n" + Color.title("DERROTA", Color.ROJO));
     }
 
     /**
@@ -111,8 +119,8 @@ public class Story {
     */
     public static void showEscape()
     {
-        System.out.println("\n[SISTEMA] El héroe ha abandonado el tutorial.");
-        System.out.println("Las puertas se cierran a su espalda.");
-        System.out.println("FIN DE LA AVENTURA");
+        System.out.println("\n" + Color.SISTEMA + " El héroe ha abandonado el tutorial.");
+        System.out.println(Color.CURSIVA + "Las puertas se cierran a su espalda." + Color.RESET);
+        System.out.println("\n" + Color.title("FIN DE LA AVENTURA", Color.ROJO));
     }
 }
