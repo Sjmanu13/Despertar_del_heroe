@@ -32,7 +32,7 @@ public class Game {
             System.out.println(Color.GRIS + Color.CURSIVA + Color.center("Bienvenido/a, héroe") + Color.RESET);
 
             System.out.println();
-            
+
             System.out.println("   " + Color.option(1) + " Nueva partida");
             System.out.println("   " + Color.option(2) + " Mostrar ranking");
             System.out.println("   " + Color.option(3) + " Guía");
@@ -414,10 +414,11 @@ public class Game {
     */
     private static void showLifeLine(String nombre, String colorNombre, int vida, int vidaMaxima)
     {
-        String nombreAlineado = String.format("%-13s", nombre);   // primero se alinea…
+        String nombreAlineado = String.format("%-15s", nombre);
 
-        System.out.printf("%s %s %s %4d/%d%n",
-                Color.ROJO + "■" + Color.RESET,
-                colorNombre + Color.NEGRITA + nombreAlineado + Color.RESET);
+        System.out.printf("%s %s %4d/%d%n",
+                colorNombre + Color.NEGRITA + nombreAlineado + Color.RESET,
+                lifeBar(vida, vidaMaxima),
+                vida, vidaMaxima);
     }
 }
