@@ -181,13 +181,13 @@ public class Hero implements IBasico{
 
         if(!rollToHit(objetivo.getClaseArmadura()) )
         {
-            System.out.println("Fallaste! ");
+            System.out.println("¡Fallaste! ");
         }
         else
         {
             int danyo = rollDamage();
             objetivo.takeDamage(danyo);
-            System.out.println("Inflingiste " + danyo + " de daño");
+            System.out.println("Inflingiste " + danyo + " de daño.");
         }
     }
 

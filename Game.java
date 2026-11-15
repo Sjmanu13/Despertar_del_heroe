@@ -9,6 +9,8 @@ public class Game {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
+        Story historia = new Story();
+
         Ranking ranking = new Ranking();
         ranking.reload();
 
@@ -24,12 +26,12 @@ public class Game {
         boolean finJuego = false;
 
         do {
-            System.out.println("================================");
+            System.out.println("\n================================");
             System.out.println("Bienvenido/a a Pick me up");
-            System.out.println("\n1.    Nueva Partida");
-            System.out.println("2.    Mostrar Ranking");
-            System.out.println("3.    Guía");
-            System.out.println("4.    Salir Juego\n");
+            System.out.println("\n1. Nueva Partida");
+            System.out.println("2. Mostrar Ranking");
+            System.out.println("3. Guía");
+            System.out.println("4. Salir Juego\n");
             System.out.println("================================");
 
 
@@ -51,7 +53,7 @@ public class Game {
                     break;
 
                 case 4:
-                    System.out.println("Hasta la vista heroe");
+                    System.out.println("Hasta la vista héroe");
                     finJuego = true;
                     break;
 
@@ -71,42 +73,51 @@ public class Game {
         System.out.println("Eres un héroe que se adentra en tierras peligrosas.");
         System.out.println("En tu camino te esperan tres enemigos, cada uno más fuerte que el anterior.");
         System.out.println("Los enemigos se eligen al azar en cada partida, así que ninguna aventura es igual.");
+        System.out.println("Casi todo se decide con dados: 3d8 significa tirar tres dados de 8 caras y sumarlos.");
 
         System.out.println("\nTU HÉROE");
-        System.out.println("- Vida: se tira al empezar la partida (20d10).");
+        System.out.println("- Vida: se tira al crear el héroe (20d10, entre 20 y 200).");
         System.out.println("- Daño: 3d8 por golpe.");
         System.out.println("- Clase de armadura (CA): 12. Cuanto más alta, más difícil es que te golpeen.");
-        System.out.println("- Bonificador de ataque: +3.");
+        System.out.println("- Bonificador de ataque: +3. Se suma a tu tirada para acertar.");
+
+        System.out.println("\nLOS ENEMIGOS");
+        System.out.println("- El primero es fácil, el segundo intermedio y el tercero difícil.");
+        System.out.println("- Cuanto más difícil, más vida, más CA y más puntería tiene.");
 
         System.out.println("\nEL COMBATE");
         System.out.println("El combate es por turnos. En cada turno puedes:");
-        System.out.println(
-                "  1. Atacar: tiras 1d20 + tu bonificador. Si igualas o superas la CA del enemigo, le haces daño.");
-        System.out.println("  2. Beber una poción: recuperas vida.");
-        System.out.println("  3. Ver el inventario: consultas las pociones que te quedan.");
-        System.out.println("  4. Abandonar: terminas la aventura.");
+        System.out.println("  1. Atacar: tiras 1d20 + tu bonificador. Si igualas o superas la CA del enemigo, le haces daño.");
+        System.out.println("  2. Usar poción: recuperas vida.");
+        System.out.println("  3. Ver inventario: consultas las pociones que te quedan.");
+        System.out.println("  4. Huir: abandonas la aventura y la partida termina.");
         System.out.println("Tras atacar o beber una poción, el enemigo te devuelve el golpe si sigue en pie.");
         System.out.println("Ver el inventario, elegir una opción no válida o intentar curarte sin poder");
         System.out.println("no gastan turno: el enemigo no atacará.");
 
         System.out.println("\nLAS POCIONES");
         System.out.println("- Empiezas con 3 pociones. Cada una cura 5d8 de vida.");
-        System.out.println("- No se recuperan: así que se deben utilizar con cabeza.");
-        System.out.println("- No puedes beber si tienes la vida al máximo, y nunca superarás tu vida máxima.");
+        System.out.println("- No se recuperan, así que úsalas con cabeza.");
+        System.out.println("- No puedes beber con la vida al máximo, y nunca superarás tu vida máxima.");
 
         System.out.println("\nEL CAMPAMENTO");
-        System.out.println("Después de cada victoria, salvo la última, acampas y eliges:");
-        System.out.println("  - Descanso: recuperas parte de tu vida.");
-        System.out.println("  - Mejora: aumentas tu daño (+1d8), tu bonificador de ataque (+2) o tu CA (+2).");
+        System.out.println("Antes del primer combate, y después de cada victoria salvo la última,");
+        System.out.println("acampas y eliges una mejora:");
+        System.out.println("  - +2 a tu CA (máximo 18).");
+        System.out.println("  - +1 a tu bonificador de ataque (máximo +6).");
+        System.out.println("  - +1 dado de daño (máximo 5d8).");
+        System.out.println("Si eliges una mejora que ya está al máximo, podrás elegir otra.");
 
         System.out.println("\nPUNTUACIÓN");
-        System.out.println("- Cada enemigo derrotado te da 100 puntos.");
-        System.out.println("- Si derrotas a los tres, sumas también la vida que te quede.");
-        System.out.println("- Toda partida terminada, incluso si abandonas, se guarda en el ranking.");
+        System.out.println("- Cada enemigo derrotado vale 100 puntos por su dificultad: 100, 200 o 300.");
+        System.out.println("- Cada turno que tardas en vencerlo resta un 5 %, hasta un máximo del 40 %.");
+        System.out.println("  Ejemplo: vencer al enemigo intermedio en 5 turnos da 200 - 25 % = 150 puntos.");
+        System.out.println("- Toda partida terminada, incluso si caes o huyes, se guarda en el ranking.");
+        System.out.println("- El ranking guarda las 10 mejores. Si está lleno, solo entras superando a la décima.");
 
         System.out.println("\nFIN DE LA PARTIDA");
         System.out.println("La aventura termina cuando derrotas al tercer enemigo, cuando tu vida llega a 0");
-        System.out.println("o cuando decides abandonar.");
+        System.out.println("o cuando decides huir.");
 
         System.out.println("==================================\n");
     }
@@ -119,7 +130,7 @@ public class Game {
         sc.nextLine();                      // limpia el salto de línea que dejó readOption al elegir 
 
         do {
-            System.out.print("¿Cómo se llama tu héroe? ");
+            System.out.print("\n¿Cómo se llama tu héroe? ");
             nombre = sc.nextLine().trim();   // .trim() quita los espacios de los extremos
 
             if (nombre.isEmpty())
@@ -134,8 +145,6 @@ public class Game {
         } while (nombreVacio);
 
         Hero heroe = new Hero(nombre);
-        System.out.println("\n¡Bienvenido/a, " + heroe.getNombre() + "!");
-        System.out.println("Vida: " + heroe.getVida() + " | CA: " + heroe.getClaseArmadura());
 
         return heroe;
     }
@@ -144,10 +153,10 @@ public class Game {
     {
         boolean upgradeAplicado = false;
         do {
-            System.out.println("Tu heroe se siente más fuerte, cual fue su mejora: ");
+            System.out.println("--- MEJORAS ---");
             System.out.println("1. +2 en Clase de Armadura");
             System.out.println("2. +1 Bonificador de Ataque");
-            System.out.println("3. +1 Dado de ataque");
+            System.out.println("3. +1 dado de daño");
     
             int option = readOption(sc, 1, 3);
     
@@ -175,7 +184,7 @@ public class Game {
         int option = 0;
 
         do {
-            System.out.print("\n¿Que opción eliges? ");
+            System.out.print("\n¿Qué opción eliges? ");
 
             if (sc.hasNextInt()) {
                 option = sc.nextInt();
@@ -183,11 +192,11 @@ public class Game {
                 if (option >= numMin && option <= numMax) {
                     numValido = true;
                 } else {
-                    System.out.println("Elige una número entre " + numMin + " y " + numMax + ".");
+                    System.out.println("Elige un número entre " + numMin + " y " + numMax + ".");
                 }
             } else {
                 sc.next();
-                System.out.println("Escribe un número");
+                System.out.println("Escribe un número.");
             }
 
         } while (!numValido);
@@ -224,7 +233,7 @@ public class Game {
                         int heal = heroe.usePotion();
                         if (heal != 0) 
                         {
-                            System.out.println("El heroe toma una poción. Recuperas " + heal + " PV.");
+                            System.out.println("El héroe toma una poción. Recuperas " + heal + " PV.");
                             endTurn = true;
                         }
                     break;
@@ -270,7 +279,7 @@ public class Game {
 
     private static void showCombatActions()
     {
-        System.out.println("\n¿Qué es  lo que hará el heroe?");
+        System.out.println("\n¿Qué es lo que hará el héroe?");
         System.out.println("\n--------------------------------");
         System.out.println("1. Atacar");
         System.out.println("2. Usar Poción");
@@ -291,14 +300,14 @@ public class Game {
         boolean haHuido = false;
         int i = 0;
 
-        System.out.println(" ");
+        Story.showPrologue(heroe);
         upgradeStep(sc, heroe);
 
         while(i < enemigos.length && heroe.isAlive() && !haHuido)
         {
             Enemy enemigo = enemigos[i];
 
-            System.out.println("\n=== Combate " + (i + 1) + " de " + enemigos.length + ": aparece " + enemigo.getNombre() + " ===");
+            Story.showStageIntro(i, enemigo.getNombre());
             
             int turnosUsados = simulateCombat(sc, heroe, enemigo);
             haHuido = heroe.isAlive() && enemigo.isAlive();
@@ -311,7 +320,7 @@ public class Game {
                 
                 if (i < enemigos.length -1) 
                 {
-                    System.out.println("Subiste de piso y te sientes con más fuerzas después de haber derrotado a aquel monstruo.");
+                    Story.showCamp(i);
                     upgradeStep(sc, heroe);
                 }
             }
@@ -321,18 +330,15 @@ public class Game {
         
         if (enemigosDerrotados == enemigos.length)
         {
-            System.out.println("\nEl héroe superó las pruebas y pudo regresar a lo que podía llamar hogar.");
-            System.out.println("VICTORIA");
+            Story.showVictory();  
         }
         else if (haHuido)
         {
-            System.out.println("\nEl héroe huyó tras esa fatídica derrota y decidió retirarse de este mundo.");
-            System.out.println("TRY AGAIN");
+            Story.showEscape();
         }
         else
         {
-            System.out.println("\nEl héroe cayó en combate y fue guiado por la diosa.");
-            System.out.println("TRY AGAIN");
+            Story.showDefeat();
         }
 
         System.out.println("Enemigos derrotados: " + enemigosDerrotados + " de " + enemigos.length);

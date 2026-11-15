@@ -1,9 +1,8 @@
+/**
+* [ia] Textos narrativos del juego
+* Solo muestra texto;
+*/
 public class Story {
-    /**
-    * Textos narrativos del tutorial: prólogo, entrada a cada stage,
-    * campamentos entre stages y finales de la partida.
-    * Solo muestra texto; no modifica ningún dato del juego.
-    */
 
     // Nombre de cada stage, en el mismo orden que los encuentros de Bestiary
     private static final String[] NOMBRES_STAGE = 
@@ -39,11 +38,15 @@ public class Story {
     * Muestra el despertar del héroe al empezar la partida.
     * @param nombreHeroe nombre elegido por el jugador
     */
-    public static void showPrologue(String nombreHeroe)
+    public static void showPrologue(Hero heroe)
     {
         System.out.println("\nAbres los ojos sobre una piedra fría. No recuerdas cómo has llegado hasta aquí.");
         System.out.println("Una ventana azul se despliega frente a ti.\n");
-        System.out.println("[SISTEMA] Bienvenido/a, " + nombreHeroe + ". Has sido invocado/a como héroe.");
+        System.out.println("[SISTEMA] Bienvenido/a, " + heroe.getNombre() + ". Has sido invocado/a como héroe.");
+        System.out.println("[SISTEMA] Vida: " + heroe.getVida() 
+                                + " | CA: " + heroe.getClaseArmadura()
+                                + " | Ataque: +" + heroe.getBonificadorAtaque());
+
         System.out.println("[SISTEMA] Tutorial iniciado: supera tres stages para despertar tu verdadero poder.");
         System.out.println("[SISTEMA] Antes de empezar, elige tu primera mejora.\n");
     }

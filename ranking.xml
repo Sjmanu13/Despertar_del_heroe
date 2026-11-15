@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE ranking SYSTEM "ranking.dtd">
-
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!DOCTYPE ranking SYSTEM "ranking.dtd">
 <ranking>
     <rank position="01">
         <name>Idrial</name>
@@ -38,17 +36,17 @@
     </rank>
 
     <rank position="08">
+        <name>Ara</name>
+        <points>420</points>
+    </rank>
+
+    <rank position="09">
         <name>Chandra</name>
         <points>415</points>
     </rank>
 
-    <rank position="09">
+    <rank position="10">
         <name>Beneth</name>
         <points>395</points>
-    </rank>
-
-    <rank position="10">
-        <name>1</name>
-        <points>370</points>
     </rank>
 </ranking>

@@ -91,7 +91,7 @@ public class Enemy implements IBasico
         {
             int danyo = rollDamage();
             objetivo.takeDamage(danyo);
-            System.out.println("Recibiste " + danyo + " de daño");
+            System.out.println("Recibiste " + danyo + " de daño.");
         }
         
     }
