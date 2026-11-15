@@ -156,7 +156,7 @@ public class Ranking {
         } 
         catch (Exception e) 
         {
-            System.out.println("Error al guardar el ranking: " + e.getMessage());
+            System.out.println(Color.ROJO + "Error al leer el ranking: " + e.getMessage() + Color.RESET);
         }
     }
 
@@ -203,7 +203,7 @@ public class Ranking {
             i--;
         }
 
-        System.out.println("Enhorabuena! Has entrado en el ranking en la posición " + (i + 1) + ".");
+        System.out.println(Color.MAGENTA + "¡Enhorabuena! Has entrado en el ranking en la posición " + (i + 1) + "." + Color.RESET);
 
 
     }
@@ -214,21 +214,22 @@ public class Ranking {
      */
     public void show()
     {
-        System.out.println("========== RANKING ==========");
+                System.out.println("\n" + Color.title("RANKING", Color.AMARILLO));
         
         if (total != 0) {
 
-            for (int i = 0; i < total; i++) {
-                System.out.println((i+1) + ". " + nombres[i] + "      " + puntos[i] + " puntos");
+            for (int i = 0; i < total; i++) 
+            {
+                System.out.println(Color.leader(String.format("%2d. ", i + 1) + nombres[i], puntos[i] + " pts"));
             }
 
         }
         else
         {
-                System.out.println("Sin heroes registrados");
+            System.out.println(Color.AMARILLO + "Sin héroes registrados." + Color.RESET);
         }
 
-        System.out.println("=============================");
+        System.out.println(Color.separator());
     }
 
     /**
