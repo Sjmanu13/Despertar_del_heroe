@@ -75,54 +75,81 @@ public class Game {
         System.out.println("\n" + Color.title("GUÍA", Color.AMARILLO));
 
         System.out.println("\n" + Color.AMARILLO + Color.NEGRITA + "DE QUÉ TRATA" + Color.RESET);
-        System.out.println("Eres un héroe que se adentra en tierras peligrosas.");
-        System.out.println("En tu camino te esperan tres enemigos, cada uno más fuerte que el anterior.");
-        System.out.println("Los enemigos se eligen al azar en cada partida, así que ninguna aventura es igual.");
+
+        System.out.println("Has sido invocado/a como héroe y debes superar el tutorial: tres stages,");
+        System.out.println("cada una con un enemigo más fuerte que el anterior.");
+        System.out.println("Los enemigos se eligen al azar, así que ninguna partida es igual.");
         System.out.println("Casi todo se decide con dados: 3d8 significa tirar tres dados de 8 caras y sumarlos.");
 
+
         System.out.println("\n" + Color.AMARILLO + Color.NEGRITA + "TU HÉROE" + Color.RESET);
-        System.out.println("- Vida: se tira al crear el héroe (20d10, entre 20 y 200).");
-        System.out.println("- Daño: 3d8 por golpe.");
-        System.out.println("- Clase de armadura (CA): 12. Cuanto más alta, más difícil es que te golpeen.");
-        System.out.println("- Bonificador de ataque: +3. Se suma a tu tirada para acertar.");
+
+        System.out.println("  · Vida: se tira al crear el héroe (20d10, entre 20 y 200).");
+        System.out.println("  · Daño: 3d8 por golpe.");
+        System.out.println("  · Clase de armadura (CA): 12. Cuanto más alta, más difícil es que te golpeen.");
+        System.out.println("  · Bonificador de ataque: +3. Se suma a tu tirada para acertar.");
 
         System.out.println("\n" + Color.AMARILLO + Color.NEGRITA + "ENEMIGOS" + Color.RESET);
-        System.out.println("- El primero es fácil, el segundo intermedio y el tercero difícil.");
-        System.out.println("- Cuanto más difícil, más vida, más CA y más puntería tiene.");
+
+        System.out.println("  Prólogo » Stage 1 » Campamento » Stage 2 » Campamento » Stage 3");
+        System.out.println("El primer enemigo es fácil, el segundo intermedio y el tercero difícil.");
+        System.out.println("Cuanto más difícil, más vida, más CA y más puntería tiene.");
 
         System.out.println("\n" + Color.AMARILLO + Color.NEGRITA + "COMBATE" + Color.RESET);
-        System.out.println("El combate es por turnos. En cada turno puedes:");
-        System.out.println("  1. Atacar: tiras 1d20 + tu bonificador. Si igualas o superas la CA del enemigo, le haces daño.");
-        System.out.println("  2. Usar poción: recuperas vida.");
-        System.out.println("  3. Ver inventario: consultas las pociones que te quedan.");
-        System.out.println("  4. Huir: abandonas la aventura y la partida termina.");
-        System.out.println("Tras atacar o beber una poción, el enemigo te devuelve el golpe si sigue en pie.");
+
+        System.out.println("El combate es por turnos. En cada turno eliges una acción:");
+        System.out.println("  " + Color.option(1) + " Atacar: tiras 1d20 + tu bonificador. Si igualas o superas");
+        System.out.println("      la CA del enemigo, le haces daño.");
+        System.out.println("  " + Color.option(2) + " Poción: bebes una poción y recuperas vida.");
+        System.out.println("  " + Color.option(3) + " Inventario: consultas las pociones que te quedan.");
+        System.out.println("  " + Color.option(4) + " Huir: abandonas el tutorial y la partida termina.");
+
+        System.out.println("Tras atacar o beber, el enemigo te devuelve el golpe si sigue en pie.");
         System.out.println("Ver el inventario, elegir una opción no válida o intentar curarte sin poder");
         System.out.println("no gastan turno: el enemigo no atacará.");
 
+        System.out.println();
+
+        System.out.println("La barra de vida cambia de color según lo que queda:");
+        System.out.println("  " + lifeBar(16, 20) + "  más de la mitad");
+        System.out.println("  " + lifeBar(8, 20) + "  entre la mitad y un cuarto");
+        System.out.println("  " + lifeBar(3, 20) + "  menos de un cuarto: ¡cuidado!");
+
+        System.out.println();
+
+        System.out.println("Cada resultado lleva un símbolo delante:");
+        System.out.println("  " + Color.AMARILLO + "»" + Color.RESET + " lo que haces tú     "
+                                + Color.ROJO + "«" + Color.RESET + " lo que recibes     "
+                                + Color.GRIS + "·" + Color.RESET + " un ataque fallado");
+
         System.out.println("\n" + Color.AMARILLO + Color.NEGRITA + "POCIONES" + Color.RESET);
-        System.out.println("- Empiezas con 3 pociones. Cada una cura 5d8 de vida.");
-        System.out.println("- No se recuperan, así que úsalas con cabeza.");
-        System.out.println("- No puedes beber con la vida al máximo, y nunca superarás tu vida máxima.");
+
+        System.out.println("  · Empiezas con 3 pociones. Cada una cura 5d8 de vida.");
+        System.out.println("  · No se recuperan, así que úsalas con cabeza.");
+        System.out.println("  · No puedes beber con la vida al máximo, y nunca superarás tu vida máxima.");
 
         System.out.println("\n" + Color.AMARILLO + Color.NEGRITA + "CAMPAMENTO" + Color.RESET);
-        System.out.println("Antes del primer combate eliges una mejora y, después de cada victoria");
-        System.out.println("salvo la última, acampas y eliges una mejora:");
-        System.out.println("  - +2 a tu CA (máximo 18).");
-        System.out.println("  - +1 a tu bonificador de ataque (máximo +6).");
-        System.out.println("  - +1 dado de daño (máximo 5d8).");
+
+        System.out.println("El sistema te concede una mejora antes de la primera stage, y después");
+        System.out.println("acampas tras cada victoria, salvo la última, para elegir otra:");
+        System.out.println("  " + Color.option(1) + " +2 a la clase de armadura (máximo 18)");
+        System.out.println("  " + Color.option(2) + " +1 al bonificador de ataque (máximo +6)");
+        System.out.println("  " + Color.option(3) + " +1 dado de daño (máximo 5d8)");
+
         System.out.println("Si eliges una mejora que ya está al máximo, podrás elegir otra.");
 
         System.out.println("\n" + Color.AMARILLO + Color.NEGRITA + "PUNTUACIÓN" + Color.RESET);
-        System.out.println("- Cada enemigo derrotado vale 100 puntos por su dificultad: 100, 200 o 300.");
-        System.out.println("- Cada turno que tardas en vencerlo resta un 5 %, hasta un máximo del 40 %.");
-        System.out.println("  Ejemplo: vencer al enemigo intermedio en 5 turnos da 200 - 25 % = 150 puntos.");
-        System.out.println("- Toda partida terminada, incluso si caes o huyes, se guarda en el ranking.");
-        System.out.println("- El ranking guarda las 10 mejores. Si está lleno, solo entras superando a la décima.");
+
+        System.out.println("  · Cada enemigo vale 100 puntos por su dificultad: 100, 200 o 300.");
+        System.out.println("  · Cada turno que tardas en vencerlo resta un 5 %, hasta un máximo del 40 %.");
+        System.out.println("    Ejemplo: vencer al enemigo intermedio en 5 turnos da 200 - 25 % = 150 puntos.");
+        System.out.println("  · Toda partida terminada, incluso si caes o huyes, se guarda en el ranking.");
+        System.out.println("  · El ranking guarda las 10 mejores. Si está lleno, solo entras superando a la décima.");
 
         System.out.println("\n" + Color.AMARILLO + Color.NEGRITA + "FIN DE PARTIDA" + Color.RESET);
-        System.out.println("La aventura termina cuando derrotas al tercer enemigo, cuando tu vida llega a 0");
-        System.out.println("o cuando decides huir.");
+        
+        System.out.println("La aventura termina cuando derrotas al tercer enemigo (" + Color.VERDE + "VICTORIA" + Color.RESET + "),");
+        System.out.println("cuando tu vida llega a 0 (" + Color.ROJO + "DERROTA" + Color.RESET + ") o cuando decides huir.");
 
         System.out.println(Color.separator() + "\n");
     }
