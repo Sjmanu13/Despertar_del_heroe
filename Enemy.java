@@ -20,7 +20,8 @@ public class Enemy implements IBasico
     private int dificultad;      // FACIL, INTERMEDIO o DIFICIL
     private int dadosVida;       // Cuántos d20 tira para calcular su vida
     private int dadosDanyo;      // Cuántos d6 tira al atacar
-    private int vida;            // Vida actual: la que baja con cada golpe
+    private int vida;            // Vida actual
+    private int vidaMaxima;      // Vida máxima
     private int claseArmadura;   // Confrontación para hacer el daño
 
     // ---------------- CONSTRUCTOR ----------------
@@ -31,6 +32,7 @@ public class Enemy implements IBasico
         this.dadosVida = dadosVida;
         this.dadosDanyo = dadosDanyo;
         this.vida = Dice.roll(dadosVida, DADOS_VIDA);
+        this.vidaMaxima = vida;
         this.claseArmadura = registrarClaseArmadura(dificultad);
     }
 
@@ -53,6 +55,10 @@ public class Enemy implements IBasico
 
     public int getVida() {
         return vida;
+    }
+
+    public int getVidaMaxima() {
+        return vidaMaxima;
     }
 
     public int getClaseArmadura() {
@@ -85,13 +91,13 @@ public class Enemy implements IBasico
 
         if(!rollToHit(objetivo.getClaseArmadura()) )
         {
-            System.out.println("Falló! ");
+            System.out.println(Color.GRIS + "· ¡Falló!" + Color.RESET);
         }
         else
         {
             int danyo = rollDamage();
             objetivo.takeDamage(danyo);
-            System.out.println("Recibiste " + danyo + " de daño.");
+            System.out.println(Color.ROJO + "« Recibiste " + danyo + " de daño." + Color.RESET);
         }
         
     }
