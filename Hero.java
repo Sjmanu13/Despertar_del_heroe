@@ -201,13 +201,13 @@ public class Hero implements IBasico{
     {
         if (!hasPotions())
     {
-        System.out.println(Color.AMARILLO + "Ya tienes la vida al máximo. No necesitas beber." + Color.RESET);
+        System.out.println(Color.AMARILLO + "No quedan podcioens" + Color.RESET);
         return 0;
     }
 
     if (isFullHealth())
     {
-        System.out.println("Ya tienes la vida al máximo. No necesitas beber.");
+        System.out.println(Color.AMARILLO + "Ya tienes la vida al máximo. No necesitas beber." + Color.RESET);
         return 0;
     }
 
