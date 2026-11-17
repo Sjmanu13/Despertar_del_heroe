@@ -21,32 +21,32 @@
     </rank>
 
     <rank position="05">
+        <name>juan</name>
+        <points>450</points>
+    </rank>
+
+    <rank position="06">
         <name>Morgh</name>
         <points>445</points>
     </rank>
 
-    <rank position="06">
+    <rank position="07">
         <name>Eoxis</name>
         <points>440</points>
     </rank>
 
-    <rank position="07">
-        <name>Arkan</name>
-        <points>425</points>
-    </rank>
-
     <rank position="08">
-        <name>Ara</name>
-        <points>420</points>
+        <name>Pepe</name>
+        <points>435</points>
     </rank>
 
     <rank position="09">
-        <name>Chandra</name>
-        <points>415</points>
+        <name>Elegost</name>
+        <points>430</points>
     </rank>
 
     <rank position="10">
-        <name>Beneth</name>
-        <points>395</points>
+        <name>Arkan</name>
+        <points>425</points>
     </rank>
 </ranking>

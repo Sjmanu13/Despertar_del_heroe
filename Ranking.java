@@ -156,7 +156,7 @@ public class Ranking {
         } 
         catch (Exception e) 
         {
-            System.out.println(Color.ROJO + "Error al leer el ranking: " + e.getMessage() + Color.RESET);
+            System.out.println(Color.ROJO + "Error al guardar el ranking: " + e.getMessage() + Color.RESET);
         }
     }
 
