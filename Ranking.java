@@ -43,6 +43,49 @@ public class Ranking {
         total = 0;
     }
 
+    public void create()
+    {
+        try
+        {
+            DocumentBuilderFactory fabrica = DocumentBuilderFactory.newInstance();
+            DocumentBuilder constructor = fabrica.newDocumentBuilder();
+            Document documento = constructor.newDocument();
+
+            Element raiz = documento.createElement("ranking");
+            documento.appendChild(raiz);
+
+            for (int i = 0; i < CAPACIDAD; i++)
+            {
+                Element rank = documento.createElement("rank");
+                rank.setAttribute("position", String.format("%02d", i + 1));
+                raiz.appendChild(rank);
+
+                Element name = documento.createElement("name");
+                name.setTextContent("");
+                rank.appendChild(name);
+
+                Element points = documento.createElement("points");
+                points.setTextContent("0");
+                rank.appendChild(points);
+            }
+
+            TransformerFactory transformerFabrica = TransformerFactory.newInstance();
+            Transformer transformer = transformerFabrica.newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+
+            DOMSource origen = new DOMSource(documento);
+            StreamResult destino = new StreamResult(new File(ARCHIVO));
+            transformer.transform(origen, destino);
+
+            System.out.println("Fichero XML generado correctamente");
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error generando el XML: " + e.getMessage());
+        }
+    }
+
     /**
      * Carga el ranking desde el archivo XML.
      * Copia en los arrays los registros que tienen nombre.
