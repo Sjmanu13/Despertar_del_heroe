@@ -1,52 +1,52 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><!DOCTYPE ranking SYSTEM "ranking.dtd">
 <ranking>
     <rank position="01">
-        <name>Idrial</name>
-        <points>490</points>
+        <name>Empty</name>
+        <points>0</points>
     </rank>
 
     <rank position="02">
-        <name>Baylen</name>
-        <points>485</points>
+        <name>Empty</name>
+        <points>0</points>
     </rank>
 
     <rank position="03">
-        <name>Benethor</name>
-        <points>460</points>
+        <name>Empty</name>
+        <points>0</points>
     </rank>
 
     <rank position="04">
-        <name>Gandalf</name>
-        <points>455</points>
+        <name>Empty</name>
+        <points>0</points>
     </rank>
 
     <rank position="05">
-        <name>juan</name>
-        <points>450</points>
+        <name>Empty</name>
+        <points>0</points>
     </rank>
 
     <rank position="06">
-        <name>Morgh</name>
-        <points>445</points>
+        <name>Empty</name>
+        <points>0</points>
     </rank>
 
     <rank position="07">
-        <name>Eoxis</name>
-        <points>440</points>
+        <name>Empty</name>
+        <points>0</points>
     </rank>
 
     <rank position="08">
-        <name>Pepe</name>
-        <points>435</points>
+        <name>Empty</name>
+        <points>0</points>
     </rank>
 
     <rank position="09">
-        <name>Elegost</name>
-        <points>430</points>
+        <name>Empty</name>
+        <points>0</points>
     </rank>
 
     <rank position="10">
-        <name>Arkan</name>
-        <points>425</points>
+        <name>Empty</name>
+        <points>0</points>
     </rank>
 </ranking>

@@ -201,7 +201,7 @@ public class Hero implements IBasico{
     {
         if (!hasPotions())
     {
-        System.out.println(Color.AMARILLO + "No quedan podcioens" + Color.RESET);
+        System.out.println(Color.AMARILLO + "No quedan pociones" + Color.RESET);
         return 0;
     }
 

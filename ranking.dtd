@@ -1,4 +1,4 @@
-<!ELEMENT ranking (rank+)>
+<!ELEMENT ranking (rank*)>
 <!ELEMENT rank (name, points)>
 <!ELEMENT name (#PCDATA)>
 <!ELEMENT points (#PCDATA)>
