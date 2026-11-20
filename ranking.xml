@@ -1,52 +1,53 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><!DOCTYPE ranking SYSTEM "ranking.dtd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE ranking SYSTEM "ranking.dtd">
 <ranking>
     <rank position="01">
-        <name>Empty</name>
-        <points>0</points>
+        <name>Baylen</name>
+        <points>485</points>
     </rank>
 
     <rank position="02">
-        <name>Empty</name>
-        <points>0</points>
+        <name>Galadriel</name>
+        <points>470</points>
     </rank>
 
     <rank position="03">
-        <name>Empty</name>
-        <points>0</points>
+        <name>Benethor</name>
+        <points>460</points>
     </rank>
 
     <rank position="04">
-        <name>Empty</name>
-        <points>0</points>
+        <name>Gandalf</name>
+        <points>455</points>
     </rank>
 
     <rank position="05">
-        <name>Empty</name>
-        <points>0</points>
+        <name>Morgh</name>
+        <points>445</points>
     </rank>
 
     <rank position="06">
-        <name>Empty</name>
-        <points>0</points>
+        <name>Eoxis</name>
+        <points>440</points>
     </rank>
 
     <rank position="07">
-        <name>Empty</name>
-        <points>0</points>
+        <name>Idrial</name>
+        <points>430</points>
     </rank>
 
     <rank position="08">
-        <name>Empty</name>
-        <points>0</points>
+        <name>Elegost</name>
+        <points>500</points>
     </rank>
 
     <rank position="09">
-        <name>Empty</name>
-        <points>0</points>
+        <name>Aldric</name>
+        <points>430</points>
     </rank>
 
     <rank position="10">
-        <name>Empty</name>
-        <points>0</points>
+        <name>Tom &amp; &lt;Jerry&gt;</name>
+        <points>430</points>
     </rank>
 </ranking>
