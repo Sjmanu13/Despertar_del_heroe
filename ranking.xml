@@ -3,51 +3,51 @@
 <ranking>
     <rank position="01">
         <name>Baylen</name>
-        <points>485</points>
+        <points>1000</points>
     </rank>
 
     <rank position="02">
         <name>Galadriel</name>
-        <points>470</points>
+        <points>40</points>
     </rank>
 
     <rank position="03">
         <name>Benethor</name>
-        <points>460</points>
+        <points>30</points>
     </rank>
 
     <rank position="04">
         <name>Gandalf</name>
-        <points>455</points>
+        <points>20</points>
     </rank>
 
     <rank position="05">
         <name>Morgh</name>
-        <points>445</points>
+        <points>10</points>
     </rank>
 
     <rank position="06">
-        <name>Eoxis</name>
-        <points>440</points>
+        <name></name>
+        <points>0</points>
     </rank>
 
     <rank position="07">
-        <name>Idrial</name>
-        <points>430</points>
+        <name></name>
+        <points>0</points>
     </rank>
 
     <rank position="08">
-        <name>Elegost</name>
-        <points>500</points>
+        <name></name>
+        <points>0</points>
     </rank>
 
     <rank position="09">
-        <name>Aldric</name>
-        <points>430</points>
+        <name></name>
+        <points>0</points>
     </rank>
 
     <rank position="10">
-        <name>Tom &amp; &lt;Jerry&gt;</name>
-        <points>430</points>
+        <name></name>
+        <points>0</points>
     </rank>
 </ranking>
