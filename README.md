@@ -26,11 +26,19 @@ Proyecto intermodular de 1.º de DAM (Programación, Entornos de Desarrollo y Le
 
 ## Requisitos
 
-- JDK 11 o superior (el código usa `String.repeat`). Probado con JDK [21.0.2.1].
+- JDK 11 o superior (el código usa `String.repeat`). Probado con JDK 21.0.2.1.
 - Una consola que interprete los códigos de color ANSI: la terminal de Visual Studio Code o Windows Terminal.
 - Para generar el HTML: Visual Studio Code con la extensión **XSLT/XPath for Visual Studio Code** y el procesador Saxon.
 
 ## Compilar y ejecutar
+Desde una terminal abierta en la carpeta del proyecto:
+
+```
+javac -encoding UTF-8 -d bin *.java
+java -cp bin Game
+```
+- `javac` compila todos los `.java` y deja los `.class` en la carpeta `bin/`, que Git ignora (`.gitignore`).
+- `java -cp bin Game` ejecuta el juego buscando las clases en `bin/`.
 
 En Visual Studio Code también se puede abrir `Game.java` y pulsar **Run**.
 
