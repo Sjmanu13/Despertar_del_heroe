@@ -43,6 +43,11 @@ public class Ranking {
         total = 0;
     }
 
+    /**
+    * Crea ranking.xml desde cero con CAPACIDAD huecos vacíos.
+    * No se llama desde el programa: el profesor indicó que bastaba con
+    * modificar el archivo existente. No escribe la declaración DOCTYPE.
+    */
     public void create()
     {
         try

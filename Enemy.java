@@ -1,3 +1,7 @@
+/**
+* Enemigo del combate. Su vida y su CA se tiran al crearlo
+* según la dificultad (FACIL, INTERMEDIO o DIFICIL).
+*/
 public class Enemy implements IBasico
 {
     // Nivel de dificultad
@@ -25,6 +29,13 @@ public class Enemy implements IBasico
     private int claseArmadura;   // Confrontación para hacer el daño
 
     // ---------------- CONSTRUCTOR ----------------
+    /**
+    * Crea un enemigo y tira su vida (Xd20) y su clase de armadura.
+    * @param nombre nombre del enemigo
+    * @param dificultad FACIL, INTERMEDIO o DIFICIL
+    * @param dadosVida cuántos d20 tira para la vida
+    * @param dadosDanyo cuántos d6 tira al atacar
+    */
     public Enemy (String nombre, int dificultad, int dadosVida, int dadosDanyo)
     {
         this.nombre = nombre;
@@ -71,7 +82,11 @@ public class Enemy implements IBasico
 
     // ---------------- METODOS ----------------
 
-    // Registrar CA aleatorio según la dificultad del enemigo
+    /**
+    * Calcula una CA aleatoria dentro del rango de su dificultad.
+    * @param dificultad FACIL, INTERMEDIO o DIFICIL
+    * @return CA entre CA_MINIMA y CA_MAXIMA de esa dificultad
+    */
     private int registrarClaseArmadura(int dificultad) 
     {
 
@@ -85,7 +100,10 @@ public class Enemy implements IBasico
         return min + Dice.roll(1, max - min + 1) - 1;   
     }
 
-    
+    /**
+    * Ataca al objetivo: si acierta, tira el daño y se lo resta.
+    * @param objetivo combatiente que recibe el ataque
+    */
     public void attack(IBasico objetivo)
     {
 
@@ -102,13 +120,21 @@ public class Enemy implements IBasico
         
     }
 
+    /**
+    * Tira 1d20 + bonificador de ataque contra la CA del  objetivo.
+    * @param caObjetivo clase de armadura del objetivo
+    * @return true si la tirada iguala o supera la CA
+    */
     public boolean rollToHit(int caObjetivo)
     {
         int tirada = Dice.roll(1, Dice.D20) + getBonoAtaque();
         return tirada >= caObjetivo;
     }
 
-    // (setVida), baja vida actual del enemigo
+    /**
+    * Resta el daño a la vida actual, que nunca baja de 0.
+    * @param cantidadDanyo daño recibido
+    */
     public void takeDamage(int cantidadDanyo) 
     {
         vida -= cantidadDanyo;
@@ -117,15 +143,18 @@ public class Enemy implements IBasico
         }
     }
 
-    // Comprobación de si el enemigo sigue vivo
-    // @return "true" si aún le queda vida
+    /**
+    * @return true si al enemigo le queda vida
+    */
     public boolean isAlive() 
     {
         return vida > 0;
     }
 
-    // Ataque del enemigo (cantidad de dados, daño de cada dado)
-    // @return suma el daño total
+    /**
+    * Tira el daño del enemigo (Xd6).
+    * @return daño total
+    */
     public int rollDamage() {
         return Dice.roll(dadosDanyo, DADOS_DANYO);
     }

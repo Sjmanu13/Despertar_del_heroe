@@ -1,4 +1,7 @@
-// Interfaz para añadir métodos comunes de Hero y Enemy
+/**
+* Métodos comunes de los combatientes (Hero y Enemy),
+* para que uno pueda atacar al otro sin conocer su clase.
+*/
 public interface IBasico 
 {
     public String getNombre();

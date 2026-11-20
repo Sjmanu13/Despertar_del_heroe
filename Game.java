@@ -1,5 +1,9 @@
 import java.util.Scanner;
 
+/**
+* Clase principal del juego: menú, partida, combate y puntuación.
+* Es la única clase que se comunica con todas las demás
+*/
 public class Game {
     // -------- CONSTANTES DE PUNTUACIÓN --------
     private static final int PUNTOS_BASE = 100;
@@ -9,6 +13,10 @@ public class Game {
     // -------- CONSTANTES DE BARRA DE VIDA --------
     private static final int LARGO_BARRA = 20; // Nº casillas de la barra de vida
 
+    /**
+    * Carga el ranking y abre el menú principal.
+    * @param args no se usan
+    */
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
@@ -23,6 +31,11 @@ public class Game {
     // -=-=-=-=-=-=- METODOS -=-=-=-=-=-=-
 
     // -------- MENÚ --------
+    /**
+    * Muestra el menú principal y lo repite hasta que el jugador sale.
+    * @param sc lector de teclado
+    * @param ranking ranking cargado al arrancar
+    */
     private static void mainMenu(Scanner sc, Ranking ranking) {
         boolean finJuego = false;
 
@@ -154,6 +167,11 @@ public class Game {
         System.out.println(Color.separator() + "\n");
     }
 
+    /**
+    * Pide el nombre del héroe hasta que no esté vacío y lo crea.
+    * @param sc lector de teclado
+    * @return héroe nuevo
+    */
     private static Hero newPlayer(Scanner sc) 
     {
         boolean nombreVacio = true;
@@ -181,6 +199,12 @@ public class Game {
         return heroe;
     }
 
+    /**
+    * Muestra las mejoras y las repite hasta que se aplica una
+    * (una mejora al máximo no cuenta).
+    * @param sc lector de teclado
+    * @param heroe héroe que recibe la mejora
+    */
     private static void upgradeStep(Scanner sc, Hero heroe)
     {
         boolean upgradeAplicado = false;
@@ -210,6 +234,14 @@ public class Game {
 
     }
 
+    /**
+    * Lee una opción numérica y la repite si no es un número
+    * o está fuera de rango.
+    * @param sc lector de teclado
+    * @param numMin opción mínima válida
+    * @param numMax opción máxima válida
+    * @return opción elegida
+    */
     private static int readOption(Scanner sc, int numMin, int numMax) 
     {
         boolean numValido = false;
@@ -237,6 +269,14 @@ public class Game {
     }
 
     // -------- SIMULATE COMBAT --------
+    /**
+    * Resuelve un combate por turnos hasta que alguien cae o el héroe huye.
+    * Consultar el inventario o intentar curarse sin poder no gasta turno.
+    * @param sc lector de teclado
+    * @param heroe héroe del jugador
+    * @param enemigo enemigo del combate
+    * @return turnos usados
+    */
     private static int simulateCombat(Scanner sc, Hero heroe, Enemy enemigo)
     {
         boolean huida = false;
@@ -324,6 +364,12 @@ public class Game {
     }
 
     // -------- GAME --------
+    /**
+    * Desarrolla una partida completa: crea el héroe y los enemigos,
+    * encadena los combates y las mejoras, y registra la puntuación.
+    * @param sc lector de teclado
+    * @param ranking ranking donde se guarda la partida
+    */
     private static void startGame(Scanner sc, Ranking ranking)
     {
         Hero heroe = newPlayer(sc);
@@ -386,6 +432,13 @@ public class Game {
         System.out.println(Color.separator());
     }
 
+    /**
+    * Calcula los puntos de un enemigo derrotado: 100 por nivel de
+    * dificultad, menos un 5 % por turno, con un descuento máximo del 40 %.
+    * @param diffEnemigo dificultad del enemigo (1 a 3)
+    * @param turn turnos usados en el combate
+    * @return puntos obtenidos
+    */
     private static int calculateScore(int diffEnemigo, int turn)
     {
         int valorEnemigo = PUNTOS_BASE * diffEnemigo;

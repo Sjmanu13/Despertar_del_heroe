@@ -1,3 +1,7 @@
+/**
+* Héroe del jugador: vida, daño, CA y bonificador obtenidos con dados,
+* mejoras entre combates e inventario de pociones.
+*/
 public class Hero implements IBasico{
 
     // -=-=-=-=-=-=- ATRIBUTOS FIJOS -=-=-=-=-=-=-
@@ -33,6 +37,10 @@ public class Hero implements IBasico{
     private int potionRemaining;
     
     // -=-=-=-=-=-=- CONSTRUCTOR -=-=-=-=-=-=-
+    /**
+    * Crea el héroe con vida 20d10, daño 3d8, CA 12, bonificador +3 y tres pociones.
+    * @param nombre nombre del héroe
+    */
     public Hero (String nombre)
     {
         this.nombre = nombre;
@@ -78,6 +86,7 @@ public class Hero implements IBasico{
     /**
     * Aumenta la cantidad de dados al atacar
     * Añade +1 a dadosDanyo
+    * @return true si se aplicó; false si ya estaba al máximo
     */
     public boolean upgradeDadosDanyo() 
     {
@@ -134,6 +143,9 @@ public class Hero implements IBasico{
     }
 
     // -------- START GAME --------
+    /**
+    * Llena el inventario con NUM_POCIONES pociones de 5d8.
+    */
     private void prepareInventory()
     {
         potions = new int[NUM_POCIONES];
@@ -170,12 +182,19 @@ public class Hero implements IBasico{
     }
 
     // -------- COMBAT --------
-
+    /**
+    * Tira el daño del héroe (Xd8 según sus mejoras).
+    * @return daño total
+    */
     public int rollDamage()
     {
         return Dice.roll(dadosDanyo, CARAS_DANYO);
     }
 
+    /**
+    * Ataca al objetivo: si acierta, tira el daño y se lo resta.
+    * @param objetivo combatiente que recibe el ataque
+    */
     public void attack(IBasico objetivo)
     {
 
@@ -195,6 +214,7 @@ public class Hero implements IBasico{
     * (setVida) sube la vida actual
     * Bebe la última poción disponible: cura sin superar la vida máxima y la retira del inventario.
     * Antes de llamarlo hay que comprobar tienePociones() y vidaLlena().
+    * Antes de llamarlo hay que comprobar hasPotions() e isFullHealth().
     * @return vida recuperada
     */
     public int usePotion()
@@ -230,6 +250,7 @@ public class Hero implements IBasico{
     * Baja la vida actual
     * Recibe daño del enemigo y se le resta a su vida actual
     * Si el daño es letal, su vida se queda en 0
+    * @param cantidadDanyo daño recibido
     */
     public void takeDamage(int cantidadDanyo) 
     {
@@ -242,7 +263,7 @@ public class Hero implements IBasico{
     // ---------- CHECKS ----------
     /**
     * Indica si se acierta el golpe (D20 + bon.attack >= CA del objetivo)
-    * @param caObjetivo
+    * @param caObjetivo clase de armadura del objetivo
     * @return true si supera el CA
     */
     public boolean rollToHit(int caObjetivo) 
@@ -267,6 +288,9 @@ public class Hero implements IBasico{
     return vida == vidaMaxima;
     }
 
+    /**
+    * @return true si al héroe le queda vida
+    */
     public boolean isAlive()
     {
         return vida > 0;

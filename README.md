@@ -75,3 +75,7 @@ La opción **[3] Guía** del menú explica todas las reglas dentro del juego.
   1. Indica en la configuración de Visual Studio Code la ruta del `.jar` de Saxon (`XSLT.tasks.saxonJar`).
   2. Pulsa **Ctrl+Mayús+B** y elige la tarea **«ranking with ranking.xml»**.
   3. Selecciona `ranking.html` como archivo de salida.
+   
+- Para validar: abre `ranking.xml` en Visual Studio Code con la extensión **XML** de Red Hat; los errores aparecen en el panel Problemas (Ctrl+Mayús+M). Las copias con errores están en `errores/`.
+- Para las consultas XPath: con la extensión **XML Tools**, abre `ranking.xml`, pulsa Ctrl+Mayús+P → *XML Tools: Evaluate XPath* y escribe cada expresión de `pruebas/consultas_xPath.md`.
+- Para el ranking vacío: transforma `pruebas/ranking_vacio.xml` con el mismo XSLT.
